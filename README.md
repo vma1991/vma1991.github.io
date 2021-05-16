@@ -2,7 +2,7 @@
 
 ### 202105 Facebook leak
 (Jupyter notebooks, rendered to HTML)  
-[With Python code showing](https://bit.ly/3bN4RR5)
+[With Python code showing](https://bit.ly/3bN4RR5)  
 [With Python code hidden](https://bit.ly/3tQGHv1)  
 A simple statistical study on some of the data from the April 2021 Facebook leak (France files).
 
