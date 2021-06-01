@@ -1,5 +1,3 @@
-Below is a collection of links to various things I've made
-
 ### 202105 Stack Exchange queries
 [Sql file](https://github.com/vma1991/vma1991.github.io/blob/main/stackexchange_sql/20210524_stackexchange.sql)  
 [(Database reference)](https://vma1991.github.io/stackexchange_sql/stackexchange_db.png)  
