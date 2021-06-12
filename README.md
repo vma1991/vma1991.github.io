@@ -7,7 +7,7 @@ Comparing the two methods with an example
 [(Database reference)](https://vma1991.github.io/stackexchange_sql/stackexchange_db.png)  
 Some (T-)SQL Queries meant for the [Stack Exchange Data Explorer](https://data.stackexchange.com/)
 
-### 202105 Marseille
+### 202105 Marseille sea states
 [(Repository)](https://github.com/vma1991/marseille)  
 [Main notebook (HTML render)](https://vma1991.github.io/marseille/20210517_marseille.html)  
 [Functions notebook (HTML render)](https://vma1991.github.io/marseille/20210515_functions.html)  
