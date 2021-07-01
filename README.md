@@ -1,3 +1,8 @@
+### 202107 ipynb_to_html
+[Script folder](https://github.com/vma1991/vma1991.github.io/tree/main/ipynb_to_html)  
+[Example html render](https://vma1991.github.io/ipynb_to_html/html/example.html)  
+Python script for converting jupyter notebooks to html files with the intent of leveraging browser defaults across devices
+
 ### 202106 Long shots : ARIMA vs Dense
 [Jupyter Notebook render](https://vma1991.github.io/arima_vs_dense/20210609_arima_vs_dense.html)  
 Comparing the two methods with an example
