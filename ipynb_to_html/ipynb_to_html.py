@@ -72,6 +72,7 @@ for opt, arg in opts:
     #print manual
     if opt == '-h':
         print(manual)
+        sys.exit(2)
     #input, output
     elif opt == '-i':
         file_name = os.path.splitext(arg)[0]
