@@ -1,3 +1,7 @@
+### 202107 GPT-J-6B Inferences
+[HTML](https://vma1991.github.io/gptj6b_inferences/gptj6b.html)  
+Curiosity and awe-inspiring stories
+
 ### 202107 ipynb_to_html
 [Script folder](https://github.com/vma1991/vma1991.github.io/tree/main/ipynb_to_html)  
 [Example html render](https://vma1991.github.io/ipynb_to_html/html/example.html)  
