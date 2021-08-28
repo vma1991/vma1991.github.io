@@ -1,3 +1,8 @@
+### 202108 Maize yields  
+[GIF animation](https://vma1991.github.io/maize_yield/animation.gif)  
+[Jupyter Notebook render](https://vma1991.github.io/maize_yield/20210828_maize_yield.html)  
+Picturing maize yield data from the [Global Dataset of Historical Yields](https://doi.pangaea.de/10.1594/PANGAEA.909132) for the years 1991-2000 as an animation ; Python (NetCDF4, Cartopy), GIMP
+
 ### 202107 GPT-J-6B Inferences
 [HTML](https://vma1991.github.io/gptj6b_inferences/gptj6b.html)  
 Curiosity and awe-inspiring stories
