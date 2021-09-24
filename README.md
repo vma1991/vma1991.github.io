@@ -3,10 +3,6 @@
 [Jupyter Notebook render](https://vma1991.github.io/maize_yield/20210828_maize_yield.html)  
 Picturing maize yield data from the [Global Dataset of Historical Yields](https://doi.pangaea.de/10.1594/PANGAEA.909132) for the years 1991-2000
 
-### 202107 GPT-J-6B Inferences
-[HTML](https://vma1991.github.io/gptj6b_inferences/gptj6b.html)  
-Curiosity and awe-inspiring stories
-
 ### 202107 ipynb_to_html
 [Script folder](https://github.com/vma1991/vma1991.github.io/tree/main/ipynb_to_html)  
 [Example html render](https://vma1991.github.io/ipynb_to_html/html/example.html)  
@@ -32,7 +28,3 @@ A transcript from R to Python of part of the code I wrote during my masters inte
 [With Python code showing](https://bit.ly/3bN4RR5)  
 [With Python code hidden](https://bit.ly/3tQGHv1)  
 Study on some of the data from the April 2021 Facebook leak
-
-### 202103 web_interface
-[Repository](https://github.com/vma1991/web_interface)  
-javascript, PHP, linux shell
