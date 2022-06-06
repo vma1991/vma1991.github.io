@@ -1,12 +1,26 @@
-body {
-	margin: 10px;
-	font-family: monospace;
-	color: #333333;
+html {
+	-webkit-text-size-adjust:100%;
 }
 
-div.page {
-	font-size: 14px;
-	padding: 10px;
+body {
+	font-family:monospace;
+	font-size:large;
+}
+
+div#xp {
+	display:none;
+}
+
+div#xp_en {
+	display:none;
+}
+
+div#bg {
+	display:none;
+}
+
+div#bg_en {
+	display:none;
 }
 
 a {
@@ -14,6 +28,6 @@ a {
 }
 
 a:hover {
-	color:white;
 	background-color:blue;
+	color:white;
 }
