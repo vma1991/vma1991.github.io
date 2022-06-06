@@ -7,6 +7,10 @@ body {
 	font-size:large;
 }
 
+div#pages-icon a:hover {
+	background-color:yellow;
+}
+
 div#xp {
 	display:none;
 }
