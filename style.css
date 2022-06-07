@@ -11,6 +11,11 @@ div#pages-icon a:hover {
 	background-color:yellow;
 }
 
+div#list {
+	display:none;
+	background-color:#F8F8F8;
+}
+
 div#xp {
 	display:none;
 }
