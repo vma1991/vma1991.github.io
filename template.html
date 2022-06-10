@@ -69,6 +69,10 @@ rkJggg==">
 				newDiv2.replaceChildren();
 				newDiv2.insertAdjacentHTML('beforeend', i + '<br>');
 				}
+
+			fetch('https://cat-fact.herokuapp.com/facts/')
+				.then(response => response.json())
+				.then(data => console.log(data));
 			
 			const apiRequestHeaders = {
 				"apikey": "9455a76bb03c5a8f8305"
