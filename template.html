@@ -85,8 +85,7 @@ rkJggg==">
 				.then(response => response.json());
 
 			jsonRequest.then(data => {
-				const facts = data.map(x => x.greeted).join('\n');
-				console.log(facts);
+				console.log(data);
 				});
 		</script>
 	</body>
