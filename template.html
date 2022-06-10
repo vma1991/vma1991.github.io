@@ -8,18 +8,6 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="style.css">
-
-		<script type="text/javascript">
-			function visible(s){
-				var x = document.getElementById(s);
-				if (x.style.display == "none" || x.style.display == ""){
-					x.style.display = "block";
-					}
-				else {
-					x.style.display= "none";
-				}
-			}
-		</script>
 	</head>
 
 	<body>
@@ -62,6 +50,41 @@ rkJggg==">
 		<h3><a href="index.html">vma1991<sub>.github.io</sub></a></h3>
 
 		<h3>Template</h3>
+
+		<script type="text/javascript">
+			const newDiv = document.createElement("div");
+			var newText = document.createTextNode("Hello there guvnor");
+			newDiv.appendChild(newText);
+			document.body.appendChild(newDiv);
+
+			const newDiv2 = document.createElement("div");
+			var newText2 = document.createTextNode('Wait...');
+			newDiv2.appendChild(newText2);
+			document.body.appendChild(newDiv2);
+
+			console.log(newDiv2.innerHTML);
+
+			for(let i = 0; i < 5; i++){
+				console.log(i);
+				newDiv2.replaceChildren();
+				newDiv2.insertAdjacentHTML('beforeend', i + '<br>');
+				}
+			
+			const apiRequestHeaders = {
+				"apikey": "my_secret_key"
+			}
+
+			const apiRequest = new Request('https://nnoi.se/api',
+				{headers: apiRequestHeaders});
+			
+			var jsonRequest = fetch(apiRequest)
+				.then(response => response.json());
+
+			jsonRequest.then(data => {
+				const facts = data.map(x => x.greeted).join('\n');
+				console.log(facts);
+				});
+		</script>
 	</body>
 
 </html>
