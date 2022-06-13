@@ -52,40 +52,41 @@ rkJggg==">
 		<h3>Template</h3>
 
 		<script type="text/javascript">
-			const newDiv = document.createElement("div");
-			var newText = document.createTextNode("Hello there guvnor");
-			newDiv.appendChild(newText);
-			document.body.appendChild(newDiv);
 
-			const newDiv2 = document.createElement("div");
-			var newText2 = document.createTextNode('Wait...');
-			newDiv2.appendChild(newText2);
-			document.body.appendChild(newDiv2);
+			const contentDiv = document.createElement("div");
+			document.body.appendChild(contentDiv);
+			contentDiv.insertAdjacentHTML('beforeend', 'Fetching data...');
 
-			console.log(newDiv2.innerHTML);
 
-			for(let i = 0; i < 5; i++){
-				console.log(i);
-				newDiv2.replaceChildren();
-				newDiv2.insertAdjacentHTML('beforeend', i + '<br>');
+			function trendsDiv(div, data){
+				div.replaceChildren();
+				if('Error' in data){
+					div.insertAdjacentHTML('<br>' + data.Error);
 				}
+				else{
+					for(var i = 0; i < data.length; i++){
+						var toInsert = '<p>' + data.query + '<br>' +
+							'<a href="'+ data.url + '" target="_blank">' + data.url + '</a></p>';
+						div.insertAdjacentHTML('beforeend', toInsert);
+					}
+				}
+			}
 
-			fetch('https://cat-fact.herokuapp.com/facts/')
-				.then(response => response.json())
-				.then(data => console.log(data));
-			
+
 			const apiRequestHeaders = {
 				"apikey": "9455a76bb03c5a8f8305"
 			};
 
+
 			const apiRequest = new Request('https://nnoi.se/api',
 				{headers: apiRequestHeaders});
 			
+
 			var jsonRequest = fetch(apiRequest)
 				.then(response => response.json());
 
 			jsonRequest.then(data => {
-				console.log(data);
+				trendsDiv(contentDiv, data);
 				});
 		</script>
 	</body>
