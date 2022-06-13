@@ -49,8 +49,46 @@ rkJggg==">
 
 		<h3><a href="index.html">vma1991<sub>.github.io</sub></a></h3>
 
-		<h3>Template</h3>
+		<h3>Yesterday's trending Google queries (FR)</h3>
 
+		<script type="text/javascript">
+
+			const contentDiv = document.createElement("div");
+			document.body.appendChild(contentDiv);
+			contentDiv.insertAdjacentHTML('beforeend', 'Fetching data...');
+
+			function trendsDiv(div, data){
+				div.replaceChildren();
+				if('Error' in data){
+					div.insertAdjacentHTML('beforeend', '<br>' + data['Error']);
+				} else {
+					for(var i = 0; i < Object.keys(data).length; i++){
+						console.log(data[i]['query']);
+						var toInsert = '<p>' + data[i]['query'] + '<br>' +
+							'<a href="'+ data[i]['url'] + '" target="_blank">' + data[i]['url'] + '</a></p>';
+						div.insertAdjacentHTML('beforeend', toInsert);
+					}
+				}
+			}
+
+			const apiRequestHeaders = {
+				"apikey": "9455a76bb03c5a8f8305"
+			};
+
+
+			const apiRequest = new Request('https://nnoi.se/api/daily_trends',
+				{headers: apiRequestHeaders});
+			
+
+			var jsonRequest = fetch(apiRequest)
+				.then(response => response.json());
+
+			jsonRequest.then(data => {
+				console.log(data);
+				trendsDiv(contentDiv, data);
+				})
+				.catch(e => contentDiv.insertAdjacentHTML('beforeend', '<br>' + e));
+		</script>
 	</body>
 
 </html>
