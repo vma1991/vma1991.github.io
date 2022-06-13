@@ -57,32 +57,19 @@ rkJggg==">
 			document.body.appendChild(contentDiv);
 			contentDiv.insertAdjacentHTML('beforeend', 'Fetching data...');
 
-			/*
 			function trendsDiv(div, data){
 				div.replaceChildren();
 				if('Error' in data){
 					div.insertAdjacentHTML('beforeend', '<br>' + data['Error']);
 				} else {
-					for(var i = 0; i < data.length; i++){
-						console.log(data[i.toString()]['query']);
-						var toInsert = '<p>' + data[i.toString()]['query'] + '<br>' +
-							'<a href="'+ data[i.toString()]['url'] + '" target="_blank">' + data[i.toString()]['url'] + '</a></p>';
+					for(var i = 0; i < Object.keys(data).length; i++){
+						console.log(data[i]['query']);
+						var toInsert = '<p>' + data[i]['query'] + '<br>' +
+							'<a href="'+ data[i]['url'] + '" target="_blank">' + data[i]['url'] + '</a></p>';
 						div.insertAdjacentHTML('beforeend', toInsert);
 					}
 				}
 			}
-		       */
-
-			function trendsDiv(div, data){
-				console.log('Function call is ok');
-				console.log('data.length : ' + data.length);
-				
-				for(var i = 0; i < Object.keys(data).length; i++){
-					console.log(data[i]['query']);
-					console.log(data[i.toString()]['query']);
-				}
-			}
-
 
 			const apiRequestHeaders = {
 				"apikey": "9455a76bb03c5a8f8305"
