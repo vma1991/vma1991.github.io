@@ -62,9 +62,9 @@ rkJggg==">
 				div.replaceChildren();
 				if('Error' in data){
 					div.insertAdjacentHTML('beforeend', '<br>' + data.Error);
-				}
-				else{
+				} else {
 					for(var i = 0; i < data.length; i++){
+						console.log(data[i].query);
 						var toInsert = '<p>' + data[i].query + '<br>' +
 							'<a href="'+ data[i].url + '" target="_blank">' + data[i].url + '</a></p>';
 						div.insertAdjacentHTML('beforeend', toInsert);
