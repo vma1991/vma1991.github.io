@@ -57,7 +57,7 @@ rkJggg==">
 			document.body.appendChild(contentDiv);
 			contentDiv.insertAdjacentHTML('beforeend', 'Fetching data...');
 
-
+			/*
 			function trendsDiv(div, data){
 				div.replaceChildren();
 				if('Error' in data){
@@ -70,6 +70,11 @@ rkJggg==">
 						div.insertAdjacentHTML('beforeend', toInsert);
 					}
 				}
+			}
+		       */
+
+			function trendsDiv(div, data){
+				console.log('Function call is ok');
 			}
 
 
@@ -88,7 +93,8 @@ rkJggg==">
 			jsonRequest.then(data => {
 				console.log(data);
 				trendsDiv(contentDiv, data);
-				});
+				})
+				.catch(e => contentDiv.insertAdjacentHTML('beforeend', '<br>' + e));
 		</script>
 	</body>
 
