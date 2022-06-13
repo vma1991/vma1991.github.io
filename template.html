@@ -61,12 +61,12 @@ rkJggg==">
 			function trendsDiv(div, data){
 				div.replaceChildren();
 				if('Error' in data){
-					div.insertAdjacentHTML('<br>' + data.Error);
+					div.insertAdjacentHTML('beforeend', '<br>' + data.Error);
 				}
 				else{
 					for(var i = 0; i < data.length; i++){
-						var toInsert = '<p>' + data.query + '<br>' +
-							'<a href="'+ data.url + '" target="_blank">' + data.url + '</a></p>';
+						var toInsert = '<p>' + data[i].query + '<br>' +
+							'<a href="'+ data[i].url + '" target="_blank">' + data[i].url + '</a></p>';
 						div.insertAdjacentHTML('beforeend', toInsert);
 					}
 				}
