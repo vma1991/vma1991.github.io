@@ -153,20 +153,20 @@ rkJggg==">
 			/////
 
 
-			const apiRequestHeaders = {
-				"apikey": "9455a76bb03c5a8f8305"
-			};
-
-			const reqUrl = 'https://nnoi.se/api/daily_trends/' + countrySelect.value + '/';
-
-			const apiRequest = new Request(reqUrl,
-				{headers: apiRequestHeaders});
-			
-			var jsonRequest = fetch(apiRequest)
-				.then(response => response.json());
-
-
 			function goTrends(){
+
+				const apiRequestHeaders = {
+					"apikey": "9455a76bb03c5a8f8305"
+				};
+
+				const reqUrl = 'https://nnoi.se/api/daily_trends/' + countrySelect.value + '/';
+
+				const apiRequest = new Request(reqUrl,
+					{headers: apiRequestHeaders});
+				
+				var jsonRequest = fetch(apiRequest)
+					.then(response => response.json());
+
 				contentDiv.replaceChildren();
 				contentDiv.insertAdjacentHTML('beforeend', 'Fetching data for country ' + countrySelect.value + ' &#9203;');
 
