@@ -182,6 +182,7 @@ rkJggg==">
 				if('Error' in data){
 					contentDiv.insertAdjacentHTML('beforeend', '<br>' + data['Error']);
 				} else {
+					pageTitle.textContent += ' - ' + countrySelect.value;
 					contentDiv.replaceChildren();
 					for(var i = 0; i < Object.keys(data).length; i++){
 						console.log(data[i]['query']);
