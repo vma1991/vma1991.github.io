@@ -49,8 +49,6 @@ rkJggg==">
 
 		<h3><a href="index.html">vma1991<sub>.github.io</sub></a></h3>
 
-		<!-- <h3>Yesterday's trending Google queries (FR)</h3> -->
-
 		<script type="text/javascript">
 
 			const pageTitle = document.createElement('h3');
@@ -171,7 +169,6 @@ rkJggg==">
 				contentDiv.insertAdjacentHTML('beforeend', 'Fetching data for country ' + countrySelect.value + ' &#9203;');
 
 				jsonRequest.then(data => {
-					console.log(data);
 					displayTrends(data);
 				})
 				.catch(e => contentDiv.insertAdjacentHTML('beforeend', '<br>' + e));
@@ -184,8 +181,8 @@ rkJggg==">
 				} else {
 					pageTitle.textContent += ' - ' + countrySelect.value;
 					contentDiv.replaceChildren();
+
 					for(var i = 0; i < Object.keys(data).length; i++){
-						console.log(data[i]['query']);
 						var toInsert = '<p>' + data[i]['query'] + '<br>' +
 							'<a href="'+ data[i]['url'] + '" target="_blank">' + data[i]['url'] + '</a></p>';
 						contentDiv.insertAdjacentHTML('beforeend', toInsert);
