@@ -49,45 +49,148 @@ rkJggg==">
 
 		<h3><a href="index.html">vma1991<sub>.github.io</sub></a></h3>
 
-		<h3>Yesterday's trending Google queries (FR)</h3>
+		<!-- <h3>Yesterday's trending Google queries (FR)</h3> -->
 
 		<script type="text/javascript">
 
-			const contentDiv = document.createElement("div");
-			document.body.appendChild(contentDiv);
-			contentDiv.insertAdjacentHTML('beforeend', 'Fetching data...');
+			const pageTitle = document.createElement('h3');
+			pageTitle.textContent = "Yesterday's trending Google queries";
+			document.body.appendChild(pageTitle);
 
-			function trendsDiv(div, data){
-				div.replaceChildren();
-				if('Error' in data){
-					div.insertAdjacentHTML('beforeend', '<br>' + data['Error']);
-				} else {
-					for(var i = 0; i < Object.keys(data).length; i++){
-						console.log(data[i]['query']);
-						var toInsert = '<p>' + data[i]['query'] + '<br>' +
-							'<a href="'+ data[i]['url'] + '" target="_blank">' + data[i]['url'] + '</a></p>';
-						div.insertAdjacentHTML('beforeend', toInsert);
-					}
-				}
-			}
+			const contentDiv = document.createElement('div');
+			document.body.appendChild(contentDiv);
+
+			const countrySelect = document.createElement('select');
+
+			var optionAT = document.createElement('option');
+			optionAT.text = 'AT';
+			countrySelect.add(optionAT);
+
+			var optionBE = document.createElement('option');
+			optionBE.text = 'BE';
+			countrySelect.add(optionBE);
+
+			var optionCA = document.createElement('option');
+			optionCA.text = 'CA';
+			countrySelect.add(optionCA);
+			
+			var optionCZ = document.createElement('option');
+			optionCZ.text = 'CZ';
+			countrySelect.add(optionCZ);
+			
+			var optionDE = document.createElement('option');
+			optionDE.text = 'DE';
+			countrySelect.add(optionDE);
+
+			var optionDK = document.createElement('option');
+			optionDK.text = 'DK';
+			countrySelect.add(optionDK);
+
+			var optionFI = document.createElement('option');
+			optionFI.text = 'FI';
+			countrySelect.add(optionFI);
+
+			var optionFR = document.createElement('option');
+			optionFR.text = 'FR';
+			optionFR.selected = true;
+			countrySelect.add(optionFR);
+
+			var optionGB = document.createElement('option');
+			optionGB.text = 'GB';
+			countrySelect.add(optionGB);
+
+			var optionGR = document.createElement('option');
+			optionGR.text = 'GR';
+			countrySelect.add(optionGR);
+
+			var optionHU = document.createElement('option');
+			optionHU.text = 'HU';
+			countrySelect.add(optionHU);
+
+			var optionIE = document.createElement('option');
+			optionIE.text = 'IE';
+			countrySelect.add(optionIE);
+
+			var optionIT = document.createElement('option');
+			optionIT.text = 'IT';
+			countrySelect.add(optionIT);
+
+			var optionNL = document.createElement('option');
+			optionNL.text = 'NL';
+			countrySelect.add(optionNL);
+
+			var optionPL = document.createElement('option');
+			optionPL.text = 'PL';
+			countrySelect.add(optionPL);
+
+			var optionPT = document.createElement('option');
+			optionPT.text = 'PT';
+			countrySelect.add(optionPT);
+
+			var optionRO = document.createElement('option');
+			optionRO.text = 'RO';
+			countrySelect.add(optionRO);
+		
+			var optionSE = document.createElement('option');
+			optionSE.text = 'SE';
+			countrySelect.add(optionSE);
+		
+			var optionUS = document.createElement('option');
+			optionUS.text = 'US';
+			countrySelect.add(optionUS);
+
+			contentDiv.appendChild(countrySelect);
+
+			contentDiv.insertAdjacentHTML('beforeend', ' ');
+
+			goButton = document.createElement('button');
+			goButton.textContent = 'Go';
+			goButton.addEventListener('click', goTrends);
+
+			contentDiv.appendChild(goButton);
+
+
+			/////
+
 
 			const apiRequestHeaders = {
 				"apikey": "9455a76bb03c5a8f8305"
 			};
 
-
 			const apiRequest = new Request('https://nnoi.se/api/daily_trends',
 				{headers: apiRequestHeaders});
 			
-
 			var jsonRequest = fetch(apiRequest)
 				.then(response => response.json());
 
-			jsonRequest.then(data => {
-				console.log(data);
-				trendsDiv(contentDiv, data);
+
+			function goTrends(){
+				contentDiv.replaceChildren();
+				contentDiv.insertAdjacentHTML('beforeend', 'Fetching data for country ' + countrySelect.value + ' &#9203;');
+
+				jsonRequest.then(data => {
+					console.log(data);
+					displayTrends(data);
 				})
 				.catch(e => contentDiv.insertAdjacentHTML('beforeend', '<br>' + e));
+			}
+		
+
+			function displayTrends(data){
+				if('Error' in data){
+					contentDiv.insertAdjacentHTML('beforeend', '<br>' + data['Error']);
+				} else {
+					contentDiv.replaceChildren();
+					for(var i = 0; i < Object.keys(data).length; i++){
+						console.log(data[i]['query']);
+						var toInsert = '<p>' + data[i]['query'] + '<br>' +
+							'<a href="'+ data[i]['url'] + '" target="_blank">' + data[i]['url'] + '</a></p>';
+						contentDiv.insertAdjacentHTML('beforeend', toInsert);
+					}
+				}
+			}
+
+
 		</script>
 	</body>
 

@@ -51,6 +51,106 @@ rkJggg==">
 
 		<h3>Template</h3>
 
+		<script type="text/javascript">
+
+			const contentDiv = document.createElement('div');
+			document.body.appendChild(contentDiv);
+
+			const countrySelect = document.createElement('select');
+
+			var optionAT = document.createElement('option');
+			optionAT.text = 'AT';
+			countrySelect.add(optionAT);
+
+			var optionBE = document.createElement('option');
+			optionBE.text = 'BE';
+			countrySelect.add(optionBE);
+
+			var optionCA = document.createElement('option');
+			optionCA.text = 'CA';
+			countrySelect.add(optionCA);
+			
+			var optionCZ = document.createElement('option');
+			optionCZ.text = 'CZ';
+			countrySelect.add(optionCZ);
+			
+			var optionDE = document.createElement('option');
+			optionDE.text = 'DE';
+			countrySelect.add(optionDE);
+
+			var optionDK = document.createElement('option');
+			optionDK.text = 'DK';
+			countrySelect.add(optionDK);
+
+			var optionFI = document.createElement('option');
+			optionFI.text = 'FI';
+			countrySelect.add(optionFI);
+
+			var optionFR = document.createElement('option');
+			optionFR.text = 'FR';
+			optionFR.selected = true;
+			countrySelect.add(optionFR);
+
+			var optionGB = document.createElement('option');
+			optionGB.text = 'GB';
+			countrySelect.add(optionGB);
+
+			var optionGR = document.createElement('option');
+			optionGR.text = 'GR';
+			countrySelect.add(optionGR);
+
+			var optionHU = document.createElement('option');
+			optionHU.text = 'HU';
+			countrySelect.add(optionHU);
+
+			var optionIE = document.createElement('option');
+			optionIE.text = 'IE';
+			countrySelect.add(optionIE);
+
+			var optionIT = document.createElement('option');
+			optionIT.text = 'IT';
+			countrySelect.add(optionIT);
+
+			var optionNL = document.createElement('option');
+			optionNL.text = 'NL';
+			countrySelect.add(optionNL);
+
+			var optionPL = document.createElement('option');
+			optionPL.text = 'PL';
+			countrySelect.add(optionPL);
+
+			var optionPT = document.createElement('option');
+			optionPT.text = 'PT';
+			countrySelect.add(optionPT);
+
+			var optionRO = document.createElement('option');
+			optionRO.text = 'RO';
+			countrySelect.add(optionRO);
+		
+			var optionSE = document.createElement('option');
+			optionSE.text = 'SE';
+			countrySelect.add(optionSE);
+		
+			var optionUS = document.createElement('option');
+			optionUS.text = 'US';
+			countrySelect.add(optionUS);
+
+			contentDiv.appendChild(countrySelect);
+
+			contentDiv.insertAdjacentHTML('beforeend', ' ');
+
+			goButton = document.createElement('button');
+			goButton.textContent = 'Go';
+			goButton.addEventListener('click', goTrends);
+
+			contentDiv.appendChild(goButton);
+
+			function goTrends(){
+				console.log(countrySelect.value);
+			}
+
+		</script>
+
 	</body>
 
 </html>
