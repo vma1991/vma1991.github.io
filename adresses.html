@@ -49,7 +49,73 @@ rkJggg==">
 
 		<h3><a href="index.html">vma1991<sub>.github.io</sub></a></h3>
 
-		<h3>Template</h3>
+		<h3>Recherche d&apos;adresses (FR)</h3>
+
+		<p><i>Limit&eacute; &agrave; 10 r&eacute;sultats</i></p>
+
+		<script type="text/javascript">
+
+			const contentDiv = document.createElement('div');
+			document.body.appendChild(contentDiv);
+
+			const searchInput = document.createElement('input');
+			searchInput.setAttribute("type", "text");
+			searchInput.size = 40;
+			searchInput.addEventListener('keypress', e => {
+				if (e.key == 'Enter') { 
+					goSearch(); 
+				}
+			});
+			contentDiv.appendChild(searchInput);
+
+			const searchButton = document.createElement('button');
+			searchButton.textContent = 'Go';
+			searchButton.addEventListener('click', goSearch);
+
+			contentDiv.insertAdjacentHTML('beforeend', ' ');
+			contentDiv.appendChild(searchButton);
+
+			const resultsDiv = document.createElement('div');
+			document.body.appendChild(resultsDiv);
+
+			/////
+
+			function escapeSearchString(searchString){
+				var toReturn = searchString.toLowerCase();
+				toReturn = toReturn.replaceAll(' ', '+');
+				toReturn = encodeURI(toReturn);
+				toReturn = toReturn.replaceAll('\'', '\\\'');
+				return(toReturn);
+			}
+
+			function goSearch(){
+				resultsDiv.replaceChildren();
+				resultsDiv.insertAdjacentHTML('beforeend', '<p>Fetching data &#9203;<p>')
+				const reqUrl = 'https://api-adresse.data.gouv.fr/search?q=' + escapeSearchString(searchInput.value) + '&limit=10';
+				const apiReq = new Request(reqUrl);
+				const jsonReq = fetch(apiReq).then(response => response.json());
+				jsonReq.then(data => displayAdresses(data))
+					.catch(e => resultsDiv.insertAdjacentHTML('beforeend', '<p>' + e + '</p>'));
+			}
+
+			function displayAdresses(data){
+				if ('features' in data && data.features.length > 0){
+					var toInsert = '<p>';
+					for (var i = 0 ; i < data.features.length ; i++){
+						toInsert += data.features[i].properties.label + '<br>'
+					}
+					toInsert += '</p>'
+					resultsDiv.replaceChildren();
+					resultsDiv.insertAdjacentHTML('beforeend', toInsert);
+				}
+				else {
+					resultsDiv.replaceChildren();
+					resultsDiv.insertAdjacentHTML('beforeend', '<p>No results..</p>')
+				}
+			}
+
+
+		</script>
 
 	</body>
 
