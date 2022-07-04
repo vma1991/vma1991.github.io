@@ -58,7 +58,7 @@ rkJggg==">
 		<ul>
 			<li><a href="#mairieSemur">Mairie de Semur</a></li>
 			<li><a href="#bienPublic">Bien Public C&ocirc;te d'Or</a></li>
-			<li><a href="#hydroPont">Lac de Pont : sondes hydrom&eacute;triques</a></li>
+			<!-- <li><a href="#hydroPont">Lac de Pont : sondes hydrom&eacute;triques</a></li> -->
 			<!-- <li><a href="#">Nappe phr&eacute;atique Saulieu : pi&eacute;zom&egrave;tre</a></li> -->
 		</ul>
 
@@ -77,6 +77,7 @@ rkJggg==">
 			<div id="divBienPublicActu"></div>
 		</div>
 
+		<!--
 		<div id="divHydroPont">
 			<a id="hydroPont"></a>
 			<h2>Lac de Pont : sondes hydrom&eacute;triques</h2>
@@ -86,7 +87,6 @@ rkJggg==">
 			<div id="divHydroPontAvalQ"></div>
 		</div>
 
-		<!--
 		<div id="divPiezo">
 			<a id="piezo"></a>
 			<h2>Nappe phr&eacute;atique Saulieu : pi&eacute;zom&egrave;tre</h2>
@@ -104,12 +104,12 @@ rkJggg==">
 			divBienPublicStatus = document.getElementById('divBienPublicStatus');
 			divBienPublicActu = document.getElementById('divBienPublicActu');
 
+			/*
 			divHydroPontStatus = document.getElementById('divHydroPontStatus');
 			divHydroPontAmontH = document.getElementById('divHydroPontAmontH');
 			divHydroPontAvalH = document.getElementById('divHydroPontAvalH');
 			divHydroPontAvalQ = document.getElementById('divHydroPontAvalQ');
 
-			/*
 			divPiezo = document.getElementById('divPiezo');
 			divPiezoStatus = document.getElementById('divPiezoStatus');
 			divPiezoLevel = document.getElementById('divPiezoLevel');
@@ -206,7 +206,8 @@ rkJggg==">
 			
 			/////
 
-            function getHydroH(){
+            /*
+			function getHydroH(){
 
 				divHydroPontStatus.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
 
@@ -330,7 +331,6 @@ rkJggg==">
 			
 			getHydroQ();
 
-			/*
 			function getPiezo(){
 
 				divPiezoStatus.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
