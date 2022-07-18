@@ -321,6 +321,7 @@ rkJggg==">
 					"apikey": "9455a76bb03c5a8f8305"
 				};
 
+				//const reqUrl = 'http://localhost:5000/daily_trends/' + countrySelect.value + '/';
 				const reqUrl = 'https://nnoi.se/api/daily_trends/' + countrySelect.value + '/';
 
 				const apiRequest = new Request(reqUrl,
@@ -330,7 +331,7 @@ rkJggg==">
 					.then(response => response.json());
 
 				contentDiv.replaceChildren();
-				contentDiv.insertAdjacentHTML('beforeend', 'Fetching data for country ' + countrySelect.value + ' &#9203;');
+				contentDiv.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
 
 				jsonRequest.then(data => {
 					displayTrends(data);
@@ -340,15 +341,15 @@ rkJggg==">
 		
 
 			function displayTrends(data){
-				if('Error' in data){
-					contentDiv.insertAdjacentHTML('beforeend', '<br>' + data['Error']);
+				if('error' in data){
+					contentDiv.insertAdjacentHTML('beforeend', '<br> Api Error - ' + data.error);
 				} else {
 					pageTitle.textContent += ' - ' + countrySelect.value;
 					contentDiv.replaceChildren();
 
-					for(var i = 0; i < Object.keys(data).length; i++){
-						var toInsert = '<p>' + data[i]['query'] + '<br>' +
-							'<a href="'+ data[i]['url'] + '" target="_blank">' + data[i]['url'] + '</a></p>';
+					for(var i = 0; i < data.daily_trends.length; i++){
+						var toInsert = '<p>' + data.daily_trends[i].query + '<br>' +
+							'<a href="'+ data.daily_trends[i].url + '" target="_blank">' + data.daily_trends[i].url + '</a></p>';
 						contentDiv.insertAdjacentHTML('beforeend', toInsert);
 					}
 				}
