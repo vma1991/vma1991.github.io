@@ -58,8 +58,8 @@ rkJggg==">
 		<ul>
 			<li><a href="#mairieSemur">Mairie de Semur</a></li>
 			<li><a href="#bienPublic">Bien Public C&ocirc;te d'Or</a></li>
-			<!-- <li><a href="#hydroPont">Lac de Pont : sondes hydrom&eacute;triques</a></li> -->
-			<!-- <li><a href="#">Nappe phr&eacute;atique Saulieu : pi&eacute;zom&egrave;tre</a></li> -->
+			<li><a href="#hydroPont">Lac de Pont : sondes hydrom&eacute;triques</a></li>
+			<li><a href="#">Nappe phr&eacute;atique Saulieu : pi&eacute;zom&egrave;tre</a></li>
 		</ul>
 
 		<div id="divMairieSemur">
@@ -77,7 +77,6 @@ rkJggg==">
 			<div id="divBienPublicActu"></div>
 		</div>
 
-		<!--
 		<div id="divHydroPont">
 			<a id="hydroPont"></a>
 			<h2>Lac de Pont : sondes hydrom&eacute;triques</h2>
@@ -93,7 +92,6 @@ rkJggg==">
 			<div id="divPiezoStatus"></div>
 			<div id="divPiezoLevel"></div>
 		</div>
-		-->
 
 		<script type="text/javascript">
 
@@ -104,7 +102,6 @@ rkJggg==">
 			divBienPublicStatus = document.getElementById('divBienPublicStatus');
 			divBienPublicActu = document.getElementById('divBienPublicActu');
 
-			/*
 			divHydroPontStatus = document.getElementById('divHydroPontStatus');
 			divHydroPontAmontH = document.getElementById('divHydroPontAmontH');
 			divHydroPontAvalH = document.getElementById('divHydroPontAvalH');
@@ -113,16 +110,19 @@ rkJggg==">
 			divPiezo = document.getElementById('divPiezo');
 			divPiezoStatus = document.getElementById('divPiezoStatus');
 			divPiezoLevel = document.getElementById('divPiezoLevel');
-			*/
 
 			function getSemur(){
 
 				divSemurMairieStatus.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
 				divBienPublicStatus.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
+				divHydroPontStatus.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
+				divPiezoStatus.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
 
 				const reqHeaders = {
 					"apikey": "9455a76bb03c5a8f8305"
 				};
+
+				//const reqUrl = 'http://localhost:5000/semur/';
 				const reqUrl = 'https://nnoi.se/api/semur/';
 				const apiReq = new Request(reqUrl, {headers: reqHeaders});
 
@@ -130,10 +130,19 @@ rkJggg==">
 				.then(response => response.json())
 				.then(data => {
 					divSemurMairieStatus.replaceChildren();
-					divBienPublicStatus.replaceChildren();
 					mairieSemurActu(data);
 					mairieSemurAgenda(data);
+
+					divBienPublicStatus.replaceChildren();
 					bienPublic(data);
+
+					divHydroPontStatus.replaceChildren();
+					hydroHAmont(data);
+					hydroHAval(data);
+					hydroQAval(data);
+
+					divPiezoStatus.replaceChildren();
+					piezoH(data);
 				})
 				.catch(e => {
 					divSemurMairieStatus.insertAdjacentHTML('beforeend', '<br>' + e);
@@ -147,8 +156,8 @@ rkJggg==">
 				h3MairieSemurActu.innerHTML = "Actualit&eacute;s";
 				divSemurMairieActu.appendChild(h3MairieSemurActu);
 
-				if ('error' in data){
-					divSemurMairieActu.insertAdjacentHTML('beforeend', 'API Error - ' + data.error);
+				if ('error' in data.mairie_semur_post){
+					divSemurMairieActu.insertAdjacentHTML('beforeend', 'API Error - ' + data.mairie_semur_post.error);
 					return
 				}
 
@@ -169,8 +178,8 @@ rkJggg==">
 				h3MairieSemurAgenda.textContent = "Agenda";
 				divSemurMairieAgenda.appendChild(h3MairieSemurAgenda);
 
-				if ('error' in data){
-					divSemurMairieAgenda.insertAdjacentHTML('beforeend', 'API Error - ' + data.error);
+				if ('error' in data.mairie_semur_agenda){
+					divSemurMairieAgenda.insertAdjacentHTML('beforeend', 'API Error - ' + data.mairie_semur_agenda.error);
 					return
 				}
 
@@ -187,8 +196,8 @@ rkJggg==">
 
 			function bienPublic(data){
 
-				if ('error' in data){
-					divBienPublicActu.insertAdjacentHTML('beforeend', 'API Error - ' + data.error);
+				if ('error' in data.bien_public){
+					divBienPublicActu.insertAdjacentHTML('beforeend', 'API Error - ' + data.bien_public.error);
 					return
 				}
 
@@ -202,187 +211,101 @@ rkJggg==">
 				divBienPublicActu.insertAdjacentHTML('beforeend', toInsert);
 			}
 
-			getSemur();
-			
-			/////
+			function hydroHAmont(data){
 
-            /*
-			function getHydroH(){
-
-				divHydroPontStatus.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
-
-                const startDate = new Date();
-                startDate.setDate(startDate.getDate() - 7);
-                var startDateString = startDate.toISOString();
-                startDateString = startDateString.slice(0, 10);
-
-				const reqUrl = 'https://hubeau.eaufrance.fr/api/v1/hydrometrie/observations_tr?code_entite=F3300001&&grandeur_hydro=H&timestep=60&fields=code_station,date_obs,resultat_obs&date_debut_obs='+startDateString;
-				const apiReq = new Request(reqUrl);
-
-				fetch(apiReq)
-				.then(response => response.json())
-				.then(data => {
-					divHydroPontStatus.replaceChildren();
-					plotHydroH(data);
-				})
-				.catch(e => divHydroPontStatus.insertAdjacentHTML('beforeend', '<br>' + e));
-
-            }
-
-			function plotHydroH(resp_json){
-
-				try {
-					data = resp_json.data;
-				}
-				catch(e) {
-					divHydroPontStatus.insertAdjacentHTML('beforeend', '<br>' + e);
+				if ('error' in data.hydro_h.hydro_h_amont){
+					divHydroPontAmontH.insertAdjacentHTML('beforeend', 'API Error - ' + data.hydro_h.hydro_h_amont.error);
 					return
 				}
 
-				dataAval = data.filter(obs => obs.code_station == "F330000101");
-				dataAval.sort((a, b) => Date.parse(a.date_obs) - Date.parse(b.date_obs));
-				xAval = dataAval.map(obs => obs.date_obs);
-				yAval = dataAval.map(obs => obs.resultat_obs);
-
-				dataAmont = data.filter(obs => obs.code_station == "F330000102");
-				dataAmont.sort((a, b) => Date.parse(a.date_obs) - Date.parse(b.date_obs));
-				xAmont = dataAmont.map(obs => obs.date_obs);
-				yAmont = dataAmont.map(obs => obs.resultat_obs);
+				X = data.hydro_h.hydro_h_amont.map(obs => obs.date_obs);
+				Y = data.hydro_h.hydro_h_amont.map(obs => obs.resultat_obs);
 
 				var amontHPlot = {
-					x: xAmont,
-					y: yAmont
+					x: X,
+					y: Y
 				};
 
 				var amontHLayout = {
 					title: 'Sonde amont barrage : hauteur d\'eau (mm)'
-				}
-				
-				if (dataAmont.length > 0){
-					divHydroPontAmontH.style.maxWidth = '800px';
-					Plotly.newPlot(divHydroPontAmontH, [amontHPlot], amontHLayout);
+				};
+
+				divHydroPontAmontH.style.maxWidth = '800px';
+				Plotly.newPlot(divHydroPontAmontH, [amontHPlot], amontHLayout);
+			}
+
+			function hydroHAval(data){
+
+				if ('error' in data.hydro_h.hydro_h_aval){
+					divHydroPontAvalH.insertAdjacentHTML('beforeend', 'API Error - ' + data.hydro_h.hydro_h_aval.error);
+					return
 				}
 
+				X = data.hydro_h.hydro_h_aval.map(obs => obs.date_obs);
+				Y = data.hydro_h.hydro_h_aval.map(obs => obs.resultat_obs);
+
 				var avalHPlot = {
-					x: xAval,
-					y: yAval
+					x: X,
+					y: Y
 				};
 
 				var avalHLayout = {
 					title: 'Sonde aval barrage : hauteur d\'eau (mm)'
 				};
 
-				if (dataAval.length > 0) {
-					divHydroPontAvalH.style.maxWidth = '800px';
-					Plotly.newPlot(divHydroPontAvalH, [avalHPlot], avalHLayout);
-				}
-
+				divHydroPontAvalH.style.maxWidth = '800px';
+				Plotly.newPlot(divHydroPontAvalH, [avalHPlot], avalHLayout);
 			}
 
-            getHydroH();
+			function hydroQAval(data){
 
-			function getHydroQ(){
-				
-                const startDate = new Date();
-                startDate.setDate(startDate.getDate() - 7);
-                var startDateString = startDate.toISOString();
-                startDateString = startDateString.slice(0, 10);
-
-				const reqUrl = 'https://hubeau.eaufrance.fr/api/v1/hydrometrie/observations_tr?code_entite=F3300001&&grandeur_hydro=Q&timestep=60&fields=code_station,date_obs,resultat_obs&date_debut_obs='+startDateString;
-				const apiReq = new Request(reqUrl);
-
-				fetch(apiReq)
-				.then(response => response.json())
-				.then(data => {
-					plotHydroQ(data);
-				})
-				.catch(e => divHydroPontStatus.insertAdjacentHTML('beforeend', '<br>' + e));				
-			}
-
-			function plotHydroQ(resp_json){
-				
-				try {
-					data = resp_json.data;
-				}
-				catch(e) {
-					divHydroPontStatus.insertAdjacentHTML('beforeend', '<br>' + e);
+				if ('error' in data.hydro_q){
+					divHydroPontAvalQ.insertAdjacentHTML('beforeend', 'API Error - ' + data.hydro_q.error);
 					return
 				}
 
-				dataAval = data.filter(obs => obs.code_station == "F330000101");
-				dataAval.sort((a, b) => Date.parse(a.date_obs) - Date.parse(b.date_obs));
-				xAval = dataAval.map(obs => obs.date_obs);
-				yAval = dataAval.map(obs => obs.resultat_obs);
+				X = data.hydro_q.map(obs => obs.date_obs);
+				Y = data.hydro_q.map(obs => obs.resultat_obs);
 
 				var avalQPlot = {
-					x: xAval,
-					y: yAval
+					x: X,
+					y: Y
 				};
 
 				var avalQLayout = {
 					title: 'Sonde aval barrage : débit (l/h)'
 				};
 
-				if (dataAval.length > 0){
-					divHydroPontAvalQ.style.maxWidth = '800px';
-					Plotly.newPlot(divHydroPontAvalQ, [avalQPlot], avalQLayout);
-				}
-			}	
-			
-			getHydroQ();
-
-			function getPiezo(){
-
-				divPiezoStatus.insertAdjacentHTML('beforeend', 'Loading... &#9203;');
-
-				const startDate = new Date();
-                startDate.setDate(startDate.getDate() - 7);
-                var startDateString = startDate.toISOString();
-                startDateString = startDateString.slice(0, 10);
-
-				const reqUrl = 'http://hubeau.eaufrance.fr/api/v1/niveaux_nappes/chroniques_tr?bss_id=BSS001HXAE&fields=date_mesure,profondeur_nappe&date_debut_mesure='+startDateString;
-				const apiReq = new Request(reqUrl);
-
-				fetch(apiReq)
-				.then(response => response.json())
-				.then(data => {
-					plotPiezoLevel(data);
-				})
-				.catch(e => divPiezoStatus.insertAdjacentHTML('beforeend', '<br>' + e));
+				divHydroPontAvalQ.style.maxWidth = '800px';
+				Plotly.newPlot(divHydroPontAvalQ, [avalQPlot], avalQLayout);
 			}
 
-			function plotPiezoLevel(resp_json){
+			function piezoH(data){
 
-				try {
-					data = resp_json.data;
-				}
-				catch(e) {
-					divPiezoStatus.insertAdjacentHTML('beforeend', '<br>' + e);
+				if ('error' in data.nappe_piezo){
+					divPiezoLevel.insertAdjacentHTML('beforeend', 'API Error - ' + data.nappe_piezo.error);
 					return
 				}
 
-				data.sort((a, b) => Date.parse(a.date_obs) - Date.parse(b.date_obs));
-				piezoX = data.map(obs => obs.date_mesure);
-				piezoY = data.map(obs => data.profondeur_nappe);
+				X = data.nappe_piezo.map(obs => obs.date_mesure);
+				Y = data.nappe_piezo.map(obs => obs.profondeur_nappe);
 
 				var piezoPlot = {
-					x: piezoX,
-					y: piezoY
+					x: X,
+					y: Y
 				};
 
 				var piezoLayout = {
-					title: 'Nappe phréatique socle du Morvan (Saulieu) : distance entre sol et surface de l\'eau'
+					title: 'Nappe phréatique socle du Morvan (Saulieu) : distance entre sol et surface de l\'eau',
+					xaxis: {autorange: 'reversed'}
 				};
 
-				if (data.length > 0){
-					divPiezoLevel.style.maxWidth = '800px';
-					Plotly.newPlot(divPiezoLevel, [piezoPlot], piezoLayout);
-				}
+				divPiezoLevel.style.maxWidth = '800px';
+				Plotly.newPlot(divPiezoLevel, [piezoPlot], piezoLayout);
 			}
 
-			getPiezo();
-			*/
-		
+			getSemur();
+			
 		</script>
 		
 	</body>
