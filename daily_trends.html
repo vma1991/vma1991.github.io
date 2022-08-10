@@ -348,8 +348,8 @@ rkJggg==">
 					contentDiv.replaceChildren();
 
 					for(var i = 0; i < data.daily_trends.length; i++){
-						var toInsert = '<p>' + data.daily_trends[i].query + '<br>' +
-							'<a href="'+ data.daily_trends[i].url + '" target="_blank">' + data.daily_trends[i].url + '</a></p>';
+						var toInsert = '<p><a href="'+ data.daily_trends[i].url +
+						'" target="_blank">' + data.daily_trends[i].query + '</a></p>';
 						contentDiv.insertAdjacentHTML('beforeend', toInsert);
 					}
 				}
