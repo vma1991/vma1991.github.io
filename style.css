@@ -32,6 +32,14 @@ div#bg_en {
 	display:none;
 }
 
+span#id_pic {
+	font-size:1.5em;
+}
+
+span#id {
+	display:none;
+}
+
 a {
 	color:blue;
 }
