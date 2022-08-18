@@ -8,20 +8,34 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<style type="text/css">
 			body {
-				font-family:serif;
+				font-family:monospace;
 				background-color:aqua;
 				display:grid;
-				grid-template-columns:1200px;
+				grid-template-columns: minmax(auto, 1200px);
 				grid-template-rows:auto auto auto;
 			}
 
-			.page {
-				display:grid;
-				grid-template-columns:1fr 1fr 1fr 1fr;
-				grid-template-rows:auto;
+			@media screen and (max-width: 760px) {
+				.page {
+					display:grid;
+					grid-template-columns:1fr;
+					grid-template-rows:auto;
+				}
 			}
 
-			p {
+			@media screen and (min-width: 761px) {
+				.page {
+					display:grid;
+					grid-template-columns:1fr 1fr 1fr;
+					grid-template-rows:auto;
+				}
+			}
+			
+
+			.page div {
+				margin:2px;
+				padding:2px;
+				border-style:groove;
 				background-color:bisque;
 			}
         </style>
@@ -36,11 +50,58 @@
 			<marquee>Toute l'information de seconde main par des procédés à l'éthique parfois discutable</marquee>
 
 			<div class="page">
-				<p>Salut</p>
-				<p>Salut</p>
-				<p>Salut</p>
-				<p>Salut</p>
+				<div id="wikipedia">Wikipedia</div>
+				<div id="google">Google queries</div>
+				<div id="bienpublic">Bien public</div>
+				<div id="semur">Semur</div>
+				<div id="hydro">Sonde hydrolique</div>
+				<div id="lemonde">Le Monde</div>
+				<div id="courrier">Courrier international</div>
+				<div id="ign">IGN France</div>
+				<div id="musique">Musique</div>
 			</div>
+
+			<script type="text/javascript">
+
+				function getGrattoir(){
+					const reqHeaders = {
+						"apikey": "9455a76bb03c5a8f8305"
+					};
+
+					const reqUrl = 'http://localhost:5000/grattoir/';
+					//const reqUrl = 'https://nnoi.se/api/semur/';
+					const apiReq = new Request(reqUrl, {headers: reqHeaders});
+
+					fetch(apiReq)
+					.then(response => response.json())
+					.then(data => {
+						console.log(data);
+						showWikipedia(data);
+					})
+					.catch(e => {
+						console.log(e);
+						//showApiError();
+					});
+				}
+
+				
+				function showWikipedia(data){
+					wikipediaDiv = document.getElementById('wikipedia');
+
+					if ('error' in data.wikipedia){
+						wikipediaDiv.insertAdjacentHTML('beforeend', 'API Error - ' + data.wikipedia.error);
+						return
+					}
+
+					toInsert = '<p><a href="'+data.wikipedia.url+'" target="_blank">'+data.wikipedia.title+
+						'</a> - '+data.wikipedia.summary+'</p>';
+					wikipediaDiv.insertAdjacentHTML('beforeend', toInsert);
+
+				}
+
+
+				getGrattoir();
+			</script>
 	</body>
 
 </html>
