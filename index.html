@@ -12,6 +12,8 @@
 
 			function visible(s){
 				var x = document.getElementById(s);
+				if (x == null) { return }
+
 				if (x.style.display == "none" || x.style.display == ""){
 					x.style.display = "inline-block";
 					}
@@ -27,7 +29,7 @@
 
 		<div id="pages-icon">
 			
-			<a href="http://vma1991.github.io">
+			<a href="https://vma1991.github.io">
 				<img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
 bWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
 bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6
@@ -62,11 +64,11 @@ rkJggg==">
 			</a>
 		</div>
 
-		<h3><a href="index.html">vma1991<sub>.github.io</sub></a></h3>
+		<h3><a href="https://vma1991.github.io">vma1991<sub>.github.io</sub></a></h3>
 	
-		<span id="id_pic"><a href="#" onclick="visible('id')">&#127380;</a></span> <span id="id">Vincent Auger</span>
+		<span id="name">Vincent Auger</span>
 		
-		<h1><a href="mailto:vincentauger1991@gmail.com">&#128231;</a></h1>
+		<h1><a href="mailto:vincentauger1991@gmail.com">&#128232;</a></h1>
 
 		<!--
 		<p>
@@ -77,16 +79,16 @@ rkJggg==">
 		</p>
 		-->
 
-		<p><a href="#goto_list" onclick="visible('list')">&#128278; Bookmarks</a></p>
+		<p id="bookmarks"><a href="#goto_list" onclick="visible('list')">&#128278; Bookmarks</a></p>
 		
 		<a id="goto_list"></a>
 		<div id="list">
 			<h2>Bookmarks</h2>
 
 			<a href="animation.gif" target="_blank">animation.gif</a><br>
-			<a href="daily_trends.html" target="_blank">daily_trends.html</a><br>
+			<!-- <a href="daily_trends.html" target="_blank">daily_trends.html</a><br>
 			<a href="adresses.html" target="_blank">adresses.html</a><br>
-			<a href="semur.html" target="_blank">semur.html</a><br>
+			<a href="semur.html" target="_blank">semur.html</a><br> -->
 			<a href="grattoir.html" target="_blank">grattoir.html</a>
 		</div>
 

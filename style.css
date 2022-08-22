@@ -4,47 +4,25 @@ html {
 
 body {
 	font-family:monospace;
-	font-size:large;
+	/* font-size:large; */
 }
 
-div#pages-icon a:hover {
-	background-color:yellow;
+a { color:blue; }
+
+a:hover {
+	background-color:blue;
+	color:white;
 }
+
+div#pages-icon a:hover { background-color:yellow; }
 
 div#list {
 	display:none;
 	background-color:#F8F8F8;
 }
 
-div#xp {
-	display:none;
-}
-
-div#xp_en {
-	display:none;
-}
-
-div#bg {
-	display:none;
-}
-
-div#bg_en {
-	display:none;
-}
-
-span#id_pic {
-	font-size:1.5em;
-}
-
-span#id {
-	display:none;
-}
-
-a {
-	color:blue;
-}
-
-a:hover {
-	background-color:blue;
-	color:white;
-}
+div#xp { display:none; }
+div#xp_en { display:none; }
+div#bg { display:none; }
+div#bg_en { display:none; }
+span#name { display:none; }
