@@ -14,12 +14,12 @@ a:hover {
 	color:white;
 }
 
-div#pages-icon a:hover { background-color:yellow; }
-
-div#list {
-	display:none;
-	background-color:#F8F8F8;
+div#bookmarks { 
+	background-color:azure;
+	display:inline-block;
 }
+
+div#pages-icon a:hover { background-color:yellow; }
 
 div#xp { display:none; }
 div#xp_en { display:none; }

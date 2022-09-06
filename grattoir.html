@@ -110,7 +110,7 @@
 					})
 					.catch(e => {
 						console.log(e);
-						//showApiError();
+						loadingDiv.insertAdjacentHTML('beforeend', '<br>'+e);
 					});
 				}
 

@@ -10,16 +10,12 @@
 
 		<script type="text/javascript">
 
-			function visible(s){
+			function setDisplay(s, d){
 				var x = document.getElementById(s);
-				if (x == null) { return }
+				validDisplays = ['none', 'block', 'inline', 'inline-block'];
+				if (x == null || !validDisplays.includes(d)) { return }
 
-				if (x.style.display == "none" || x.style.display == ""){
-					x.style.display = "inline-block";
-					}
-				else {
-					x.style.display= "none";
-				}
+				x.style.display = d;
 			}
 		</script>
 
@@ -70,20 +66,8 @@ rkJggg==">
 		
 		<h1><a href="mailto:vincentauger1991@gmail.com">&#128232;</a></h1>
 
-		<!--
-		<p>
-		<a href="#goto_xp" onclick="visible('xp')">Exp&eacute;rience</a>
-		<a href="#goto_xp_en" onclick="visible('xp_en')"> Experience</a><br>
-		<a href="#goto_bg" onclick="visible('bg')">Formation</a>
-		&nbsp;<a href="#goto_bg_en" onclick="visible('bg_en')">Background</a>
-		</p>
-		-->
-
-		<p id="bookmarks"><a href="#goto_list" onclick="visible('list')">&#128278; Bookmarks</a></p>
-		
-		<a id="goto_list"></a>
-		<div id="list">
-			<h2>Bookmarks</h2>
+		<div id="bookmarks">
+			<h3>&#128278; Bookmarks</h3>
 
 			<a href="animation.gif" target="_blank">animation.gif</a><br>
 			<!-- <a href="daily_trends.html" target="_blank">daily_trends.html</a><br>
