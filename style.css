@@ -1,9 +1,33 @@
+@font-face {
+	font-family:atkinson;
+	src:url('atkinson/AtkinsonHyperlegible-Regular.woff2');
+}
+
+@font-face {
+	font-family:atkinson;
+	src:url('atkinson/AtkinsonHyperlegible-Bold.woff2');
+	font-weight:bold;
+}
+
+@font-face {
+	font-family:atkinson;
+	src:url('atkinson/AtkinsonHyperlegible-Italic.woff2');
+	font-style:italic;
+}
+
+@font-face {
+	font-family:atkinson;
+	src:url('atkinson/AtkinsonHyperlegible-BoldItalic.woff2');
+	font-weight:bold;
+	font-style:italic;
+}
+
 html {
 	-webkit-text-size-adjust:100%;
 }
 
 body {
-	font-family:monospace;
+	font-family:atkinson,monospace;
 	/* font-size:large; */
 }
 
