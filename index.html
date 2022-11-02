@@ -9,7 +9,6 @@
 		<link rel="stylesheet" href="style.css">
 
 		<script type="text/javascript">
-
 			function setDisplay(s, d){
 				var x = document.getElementById(s);
 				validDisplays = ['none', 'block', 'inline', 'inline-block'];
@@ -23,194 +22,115 @@
 
 	<body>
 
-		<div id="pages-icon">
-			
-			<a href="https://github.com/vma1991" target="_blank">
-				<img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
-bWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
-bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6
-eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0
-NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo
-dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw
-dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv
-IiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RS
-ZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpD
-cmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFu
-Y2VJRD0ieG1wLmlpZDpFNTE3OEEyQTk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCIgeG1wTU06RG9j
-dW1lbnRJRD0ieG1wLmRpZDpFNTE3OEEyQjk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCI+IDx4bXBN
-TTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkU1MTc4QTI4OTlBMDExRTI5
-QTE1QkMxMDQ2QTg5MDREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkU1MTc4QTI5OTlBMDEx
-RTI5QTE1QkMxMDQ2QTg5MDREIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4
-bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+m4QGuQAAAyRJREFUeNrEl21ojWEYx895TDPbMNlB
-K46IUiNmPvHBSUjaqc0H8pF5+aDUKPEBqU2NhRQpX5Rv5jWlDIWlMCv7MMSWsWwmb3tpXub4XXWd
-PHvc9/Gc41nu+nedc7/8r/99PffLdYdDPsvkwsgkTBwsA/PADJCnzX2gHTwBt8Hl7p537/3whn04
-XoDZDcpBlk+9P8AFcAghzRkJwPF4zGGw0Y9QS0mAM2AnQj77FqCzrtcwB1Hk81SYojHK4DyGuQ6m
-hIIrBWB9Xm7ug/6B/nZrBHBegrkFxoVGpnwBMSLR9EcEcC4qb8pP14BWcBcUgewMnF3T34VqhWMF
-kThLJAalwnENOAKiHpJq1FZgI2AT6HZtuxZwR9GidSHtI30jOrbawxlVX78/AbNfhHlomEUJJI89
-O2MqeE79T8/nk8nMBm/dK576hZgmA3cp/R4l9/UeSxiHLVIlNm4nFfT0bxyuIj7LHRTKai+zdJob
-wMKzcZSJb0ePV5PKN+BqAAKE47UlMnERELMM3EdYP/yrd+XYb2mOiYBiQ8OQnoRBlXrl9JZix7D1
-pHTazu4MoyBcnYamqAjIMTR8G4FT8LuhLsexXYYjICBiqhQBvYb6fLZIJCjPypVvaOoVAW2WcasC
-nL2Nq82xHJNSqlCeFcDshaPK0twkAhosjZL31QYw+1rlMpWGMArl23SBsZZO58F2tlJXmjOXS+s4
-WGvpMiBJT/I2PInZ6lIs9/hBsNS1hS6BG0DSqmYEDRlCXQrmy50P1oDRKTSegmNbUsA0zDMwRhPJ
-XeCE3vWLPQMvan6X8AgIa1vcR4AkGZkDR4ejJ1UHpsaVI0g2LInpOsNFUud1rhxSV+fzC9Woz2EZ
-kWQuja7/B+jUrgtIMpy9YCW4n4K41YfzRneW5E1KJTe4B2Zq1Q5EHEtj4U3AfEzR5SVY4l7QYQPJ
-dN2as7RKBF0BPZqqH4VgMAMBL8Byxr7y8zCZiDlnOcEKIPmUpgB5Z2ww5RdOiiRiNajUmWda5IG6
-WbhsyY2fx6m8gLcoJDJFkH219M3We1+cnda93pfycZpIJEL/s/wSYADmOAwAQgdpBAAAAABJRU5E
-rkJggg==">
-			</a>
-		</div>
+		<h1 id="title">Donn&eacute;es, r&eacute;seaux, syst&egrave;mes</h1>
 
 		<h3><a href="https://vma1991.net">vma1991<sub>.net</sub></a></h3>
 	
-		<span id="name">
-			Vincent Auger
-			<h1><a href="mailto:vincentauger1991@gmail.com">&#128232;</a></h1>
-		</span>
+		<div id="contact">
+			<a href="mailto:mail@vma1991.net">mail@vma1991.net</a><br>
+			<a href="https://github.com/vma1991" target="_blank">github.com/vma1991</a>
+		</div>
 
 		<div id="bookmarks">
-			<p><h2>&#128278;</h2>
+			<h2>&blank;</h2> 
 			<ul>
 				<li><a href="animation.gif" target="_blank">animation.gif</a></li>
-				<!-- <a href="daily_trends.html" target="_blank">daily_trends.html</a><br>
-				<a href="adresses.html" target="_blank">adresses.html</a><br>
-				<a href="semur.html" target="_blank">semur.html</a><br> -->
 				<li><a href="grattoir.html" target="_blank">grattoir.html</a></li>
 				<li><a href="run-n-jump.html" target="_blank">run-n-jump.html</a></li>
-			</ul></p>
+			</ul>
+		</div>
+
+		<div id="sk">
+			<h2>Comp&eacute;tences - technologies</h2>
+
+			<p class="two-cols">
+				<b>&ndash; Donn&eacute;es : consolidation, analyse, visualisation</b><br>
+				R<br>
+				Python (Jupyter Lab, Pandas, ML)<br>
+				Javascript (Plotly)<br>
+				<br>
+				<b>&ndash; D&eacute;veloppement</b><br>
+				Python (Flask)<br>
+				HTML/CSS<br>
+				Javascript<br>
+				PHP<br>
+				<br>
+				<b>&ndash; Bureautique</b><br>
+				Suite Office 365<br>
+				Windows<br>
+				SAP Business byDesign<br>
+				Graphisme (Photoshop, GIMP)<br>
+				<br>
+				<b>&ndash; Administration syst&egrave;me</b><br>
+				UNIX (Debian, OpenWRT)<br>
+				Scripting (Bash, Python)<br>
+				Nginx, Gunicorn<br>
+				<br>
+				<b>&ndash; Autres</b><br>
+				Conduite changement<br>
+				Formation et support<br>
+				Interface<br>
+				Maintenance de proximit&eacute;<br>
+				Anglais (TOEIC score max)
+			</p>
 		</div>
 
 		<div id="xp">
-			<h2>Exp&eacute;rience</h2>
+			<h2>Parcours professionnel</h2>
 
-			<h3>Op&eacute;rateur de production / Coordinateur ERP / Remplacement contrema&icirc;tre support / Technicien m&eacute;thodes</h3>
+			<h3>Industrie - Tubes roul&eacute;s soud&eacute;s</h3>
 
-			<p>Neotiss France<br>
-			sept. 2017 - sept. 2020 - 3 ans<br>
-			Venarey-les-Laumes, Bourgogne-Franche-Comt&eacute;, France<br></p>
+			<i>sept. 2017 - sept. 2020 - 3 ans</i>
 
-			<p>Approprier nouveaux outils et notions<br>
-			Coordonner efforts<br>
+			<p class="two-cols"><b>&ndash; Op&eacute;rateur</b><br>
+			Horaires d&eacute;cal&eacute;s<br>
+			<br>
+			<b>&ndash; Coordinateur ERP</b><br>
+			<i>Migration SAP R3 &rarr; Business byDesign</i><br>
+			Interface<br>
+			Approprier nouveaux outils et notions<br>
 			Assimiler et produire documentation<br>
-			Formation utilisateur<br>
-			Animer r&eacute;union<br>
-			Office 365 groupes sites sharepoint flow<br>
+			Formation et support utilisateur<br>
+			Recherche<br>
+			Configuration<br>
+			ERP SAP BusinessByDesign<br>
+			<br>
+			<b>&ndash; Remplacement contrema&icirc;tre support</b><br>
+			Suivi production<br>
+			5S<br>
+			Maintenance informatique premier niveau<br>
+			Support de proximit&eacute;<br>
 			Consolider analyser pr&eacute;senter donn&eacute;es<br>
 			Reporting<br>
-			Maintenance informatique premier niveau<br>
-			Interface<br>
-			Recherche<br>
-			ERP SAP BusinessByDesign<br>
+			<br>
+			<b>&ndash; Technicien m&eacute;thodes</b><br>
+			<i>Migration Windows 7 &rarr; 10</i><br>
+			<i>Syst&egrave;me de fichiers on premise &rarr; cloud</i><br>
+			Office 365 groupes sites sharepoint flow<br>
 			Conduite de changement<br>
-			Support de proximit&eacute;<br>
+			Documentation<br>
+			Formation et support utilisateur<br>
+			Coordonner efforts<br>
+			Animer r&eacute;union<br>
 			Travailler en projet</p>
-
-			<!-- <h3>Op&eacute;rateur cha&icirc;ne de production</h3>
-
-			<p>Fruytier Group<br>
-			mai 2017 - juin 2017 - 1 mois<br>
-			La Roche-en-Brenil, Bourgogne-Franche-Comt&eacute;, France</p>
-
-			<p>Horaires d&eacute;cal&eacute;s</p>
-
-			<h3>Employ&eacute; de station-service</h3>
-
-			<p>SARL Brachet<br>
-			nov. 2016 - f&egrave;vr. 2017 - 4 mois<br>
-			Eguilly, Bourgogne-Franche-Comt&eacute;, France</p>
-
-			<p>Accueil client&egrave;le / Caisse<br>
-			Entretien locaux<br>
-			Mise en Rayon</p> -->
 		</div>
 
-		<div id="xp_en">
-			<h2>Experience</h2>
-
-			<h3>Operator / ERP Coordinator / Support shop foreman fill-in / Methods technician</h3>
-
-			<p>Neotiss France<br>
-			sept. 2017 - sept. 2020 - 3 years<br>
-			Venarey-les-Laumes, Bourgogne-Franche-Comt&eacute;, France<br></p>
-
-			<p>Appropriate new tools and notions<br>
-			Coordinate efforts<br>
-			Digest and produce documentation<br>
-			User training<br>
-			Lead meetings<br>
-			Office 365 groups sharepoint sites flow<br>
-			Consolidate, analyse, present data<br>
-			Reporting<br>
-			First level ICT maintenance<br>
-			Interface<br>
-			Research<br>
-			ERP SAP BusinessByDesign<br>
-			Change Leading<br>
-			Proximity Support<br>
-			Project Mode</p>
-
-			<!-- <h3>Operator</h3>
-
-			<p>Fruytier Group<br>
-			may 2017 - june 2017 - 1 month<br>
-			La Roche-en-Brenil, Bourgogne-Franche-Comt&eacute;, France</p>
-
-			<p>Flexible hours</p>
-
-			<h3>Service station employee</h3>
-
-			<p>SARL Brachet<br>
-			nov. 2016 - feb. 2017 - 4 months<br>
-			Eguilly, Bourgogne-Franche-Comt&eacute;, France</p>
-
-			<p>Customer reception / cashier<br>
-			Upkeep of premises<br>
-			Shelving</p> -->
-		</div>
-
-		<div id="bg">	
+		<div id="bg">
 			<h2>Formation</h2>
 
-			<h3>Universit&eacute; Claude Bernard Lyon I</h3>
+			<div class="two-grid">		
+				<div><h3>Master - Math&eacute;matiques appliqu&eacute;es</h3>
+				<i>2012 - 2014</i>
 
-			<p><b>Master Sciences, Technologie, Sant&eacute;</b><br>
-			Mention Ing&eacute;nierie Math&eacute;matique<br>
-			Sp&eacute;cialit&eacute; Statistiques, Informatique, Techniques Num&eacute;riques<br>
-			2012 - 2014</p>
+				<p>Environnements Linux, Windows<br>
+				Programmer une application<br>
+				Bases de donn&eacute;es<br>
+				Pr&eacute;parer, analyser, mettre en forme, pr&eacute;senter des donn&eacute;es<br>
+				Impl&eacute;menter des articles de recherche</p></div>
 
-			<p>Environnements Linux, Windows<br>
-			Programmer une application<br>
-			Bases de donn&eacute;es<br>
-			Pr&eacute;parer, analyser, mettre en forme, pr&eacute;senter des donn&eacute;es<br>
-			Impl&eacute;menter des articles de recherche</p>
-
-			<p><b>Licence Sciences, Technologie, Sant&eacute;</b><br>
-			Mention Math&eacute;matiques<br>
-			Options Informatique<br>
-			2009 - 2012</p>
-		</div>
-
-		<div id="bg_en">
-			<h2>Background</h2>
-
-			<h3>Universit&eacute; Claude Bernard Lyon I</h3>
-
-			<p><b>Master Sciences, Technologie, Sant&eacute;</b><br>
-			<i>Masters, Applied Math</i><br>
-			Mention Ing&eacute;nierie Math&eacute;matique<br>
-			Sp&eacute;cialit&eacute; Statistiques, Informatique, Techniques Num&eacute;riques<br>
-			2012 - 2014</p>
-
-			<p>Windows, Linux environments<br>
-			Application programming<br>
-			Relationnal databases<br>
-			Data processing, analysis, presentation<br>
-			Implementation of research articles</p>
-
-			<p><b>Licence Sciences, Technologie, Sant&eacute;</b><br>
-			<i>Bachelors, Math / ICT</i><br>
-			Mention Math&eacute;matiques<br>
-			Options Informatique<br>
-			2009 - 2012</p>
+				<div><h3>Licence - Math&eacute;matiques informatique</h3>
+				<i>2009 - 2012</i></div>
+			</div>
 		</div>
 
 	</body>
