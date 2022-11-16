@@ -9,7 +9,6 @@
 		<style type="text/css">
 			body {
 				font-family:monospace;
-				/* background-color:aqua; */
 				display:grid;
 				grid-template-columns: minmax(auto, 1200px);
 				grid-template-rows:auto auto auto;
@@ -34,8 +33,6 @@
 			.page div {
 				margin:2px;
 				padding:2px;
-				/* border-style:groove; */
-				/* background-color:bisque; */
 			}
 
 			h2 {
@@ -83,7 +80,7 @@
 			<script type="text/javascript">
 
 				function getGrattoir(){
-					loadingDiv = document.getElementById('loading');
+					var loadingDiv = document.getElementById('loading');
 
 					const reqHeaders = {
 						"apikey": "9455a76bb03c5a8f8305"
@@ -116,14 +113,14 @@
 
 				
 				function showWikipedia(data){
-					wikipediaDiv = document.getElementById('wikipedia');
+					var wikipediaDiv = document.getElementById('wikipedia');
 
 					if ('error' in data.wikipedia){
 						wikipediaDiv.insertAdjacentHTML('beforeend', 'API Error - ' + data.wikipedia.error);
 						return
 					}
 
-					toInsert = '<p><a href="'+data.wikipedia.url+'" target="_blank">'+data.wikipedia.title+
+					var toInsert = '<p><a href="'+data.wikipedia.url+'" target="_blank">'+data.wikipedia.title+
 						'</a> - '+data.wikipedia.summary+'</p>';
 					wikipediaDiv.insertAdjacentHTML('beforeend', toInsert);
 
@@ -131,14 +128,14 @@
 
 
 				function showGoogle(data){
-					googleDiv = document.getElementById('google');
+					var googleDiv = document.getElementById('google');
 
 					if ('error' in data.google_queries){
 						googleDiv.insertAdjacentHTML('beforeend', 'API Error - ' + data.google_queries.error);
 						return
 					}
 
-					toInsert = '<p><ul>';
+					var toInsert = '<p><ul>';
 					for (var i=0;i<data.google_queries.length;i++){
 						toInsert += '<li><a href="'+data.google_queries[i].url+'" target="_blank">'+data.google_queries[i].query+
 							'</a></li>';
@@ -150,7 +147,7 @@
 
 
 				function showHydro(data){
-					hydroDiv = document.getElementById('hydro');
+					var hydroDiv = document.getElementById('hydro');
 
 					if ('error' in data.hydro_h){
 						hydroDiv.insertAdjacentHTML('beforeend', 'API Error - ' + data.hydro_h.error);
@@ -162,8 +159,8 @@
 						return
 					}
 
-					X = data.hydro_h.hydro_h_aval.map(obs => obs.date_obs);
-					Y = data.hydro_h.hydro_h_aval.map(obs => obs.resultat_obs);
+					var X = data.hydro_h.hydro_h_aval.map(obs => obs.date_obs);
+					var Y = data.hydro_h.hydro_h_aval.map(obs => obs.resultat_obs);
 
 					var avalHPlot = {
 						x: X,
@@ -174,7 +171,7 @@
 						//title: 'Aval barrage Pont : hauteur d\'eau (mm)'
 					};
 
-					plotDiv = document.createElement('div');
+					var plotDiv = document.createElement('div');
 					hydroDiv.appendChild(plotDiv);
 
 					Plotly.newPlot(plotDiv, [avalHPlot], avalHLayout);
@@ -182,14 +179,14 @@
 
 
 				function showRss(data, divId, jsonId){
-					displayDiv = document.getElementById(divId);
+					var displayDiv = document.getElementById(divId);
 
 					if ('error' in data[jsonId]){
 						displayDiv.insertAdjacentHTML('beforeend', 'API Error - ' + data[jsonId].error);
 						return
 					}
 
-					toInsert = '<p><ul>';
+					var toInsert = '<p><ul>';
 					for (var i=0;i<data[jsonId].length;i++){
 						toInsert += '<li><a href="'+data[jsonId][i].link+'" target="_blank">'+data[jsonId][i].title+
 							'</a></li>';

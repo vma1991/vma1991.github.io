@@ -7,7 +7,6 @@
 
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="style.css">
 
 		<script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
 	</head>
@@ -58,21 +57,21 @@
 
 		<script type="text/javascript">
 
-			divSemurMairieStatus = document.getElementById('divSemurMairieStatus');
-			divSemurMairieActu = document.getElementById('divSemurMairieActu');
-			divSemurMairieAgenda = document.getElementById('divSemurMairieAgenda');
+			const divSemurMairieStatus = document.getElementById('divSemurMairieStatus');
+			const divSemurMairieActu = document.getElementById('divSemurMairieActu');
+			const divSemurMairieAgenda = document.getElementById('divSemurMairieAgenda');
 
-			divBienPublicStatus = document.getElementById('divBienPublicStatus');
-			divBienPublicActu = document.getElementById('divBienPublicActu');
+			const divBienPublicStatus = document.getElementById('divBienPublicStatus');
+			const divBienPublicActu = document.getElementById('divBienPublicActu');
 
-			divHydroPontStatus = document.getElementById('divHydroPontStatus');
-			divHydroPontAmontH = document.getElementById('divHydroPontAmontH');
-			divHydroPontAvalH = document.getElementById('divHydroPontAvalH');
-			divHydroPontAvalQ = document.getElementById('divHydroPontAvalQ');
+			const divHydroPontStatus = document.getElementById('divHydroPontStatus');
+			const divHydroPontAmontH = document.getElementById('divHydroPontAmontH');
+			const divHydroPontAvalH = document.getElementById('divHydroPontAvalH');
+			const divHydroPontAvalQ = document.getElementById('divHydroPontAvalQ');
 
-			divPiezo = document.getElementById('divPiezo');
-			divPiezoStatus = document.getElementById('divPiezoStatus');
-			divPiezoLevel = document.getElementById('divPiezoLevel');
+			const divPiezo = document.getElementById('divPiezo');
+			const divPiezoStatus = document.getElementById('divPiezoStatus');
+			const divPiezoLevel = document.getElementById('divPiezoLevel');
 
 			function getSemur(){
 
@@ -115,7 +114,7 @@
 
 			function mairieSemurActu(data){
 
-				h3MairieSemurActu = document.createElement('h3');
+				var h3MairieSemurActu = document.createElement('h3');
 				h3MairieSemurActu.innerHTML = "Actualit&eacute;s";
 				divSemurMairieActu.appendChild(h3MairieSemurActu);
 
@@ -124,7 +123,7 @@
 					return
 				}
 
-				toInsert = '<ul>';
+				var toInsert = '<ul>';
 				for (var i = 0 ; i < data.mairie_semur_post.length ; i++){
 					toInsert += '<li><a href="' + data.mairie_semur_post[i].url + '" target="_blank">'
 						+ data.mairie_semur_post[i].title + '</a></li>';
@@ -137,7 +136,7 @@
 
 			function mairieSemurAgenda(data){
 
-				h3MairieSemurAgenda = document.createElement('h3');
+				var h3MairieSemurAgenda = document.createElement('h3');
 				h3MairieSemurAgenda.textContent = "Agenda";
 				divSemurMairieAgenda.appendChild(h3MairieSemurAgenda);
 
@@ -146,7 +145,7 @@
 					return
 				}
 
-				toInsert = '<ul>';
+				var toInsert = '<ul>';
 				for (var i = 0 ; i < data.mairie_semur_agenda.length ; i++){
 					toInsert += '<li><a href="' + data.mairie_semur_agenda[i].url + '" target="_blank">'
 						+ data.mairie_semur_agenda[i].title + '</a></li>';
@@ -164,7 +163,7 @@
 					return
 				}
 
-				toInsert = '<ul>';
+				var toInsert = '<ul>';
 				for (var i = 0 ; i < data.bien_public.length ; i++){
 					toInsert += '<li><a href="' + data.bien_public[i].url + '" target="_blank">'
 						+ data.bien_public[i].title + '</a></li>';
@@ -181,8 +180,8 @@
 					return
 				}
 
-				X = data.hydro_h.hydro_h_amont.map(obs => obs.date_obs);
-				Y = data.hydro_h.hydro_h_amont.map(obs => obs.resultat_obs);
+				var X = data.hydro_h.hydro_h_amont.map(obs => obs.date_obs);
+				var Y = data.hydro_h.hydro_h_amont.map(obs => obs.resultat_obs);
 
 				var amontHPlot = {
 					x: X,
@@ -204,8 +203,8 @@
 					return
 				}
 
-				X = data.hydro_h.hydro_h_aval.map(obs => obs.date_obs);
-				Y = data.hydro_h.hydro_h_aval.map(obs => obs.resultat_obs);
+				var X = data.hydro_h.hydro_h_aval.map(obs => obs.date_obs);
+				var Y = data.hydro_h.hydro_h_aval.map(obs => obs.resultat_obs);
 
 				var avalHPlot = {
 					x: X,
@@ -227,8 +226,8 @@
 					return
 				}
 
-				X = data.hydro_q.map(obs => obs.date_obs);
-				Y = data.hydro_q.map(obs => obs.resultat_obs);
+				var X = data.hydro_q.map(obs => obs.date_obs);
+				var Y = data.hydro_q.map(obs => obs.resultat_obs);
 
 				var avalQPlot = {
 					x: X,
@@ -250,8 +249,8 @@
 					return
 				}
 
-				X = data.nappe_piezo.map(obs => obs.date_mesure);
-				Y = data.nappe_piezo.map(obs => obs.profondeur_nappe);
+				var X = data.nappe_piezo.map(obs => obs.date_mesure);
+				var Y = data.nappe_piezo.map(obs => obs.profondeur_nappe);
 
 				var piezoPlot = {
 					x: X,
