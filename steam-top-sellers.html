@@ -12,7 +12,7 @@
             <div id="topbar">
                 <h4>Steam store global top sellers</h4>
                 Source - <a href="https://steamdb.info/stats/globaltopsellers/" target="_blank">SteamDB</a><br>
-                Last update - <span id="lastUpdate"></span>
+                Last update - <span id="lastUpdate"></span> <span id="hourglass">&#9203;</span>
                 <ul class="tab tab-clobk">
                     <li class="tab-item active" id="top25TableA"><a href="#" onclick="switchDisplay('top25Table')">Top 25</a></li>
                     <li class="tab-item" id="genresPieA"><a href="#" onclick="switchDisplay('genresPie')">Genres</a></li>
@@ -71,6 +71,10 @@
                     playersPeaksTable(data);
                     adultChinaPies(data);
                     reviewScoresTable(data);
+                    document.getElementById('hourglass').style.display = 'none';
+                })
+                .catch(e => {
+                    console.log(e);
                 });
             };
 
