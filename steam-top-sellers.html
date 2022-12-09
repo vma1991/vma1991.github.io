@@ -13,13 +13,14 @@
                 <h4>Steam store global top sellers</h4>
                 Source - <a href="https://steamdb.info/stats/globaltopsellers/" target="_blank">SteamDB</a><br>
                 Last update - <span id="lastUpdate"></span> <span id="hourglass">&#9203;</span>
-                <ul class="tab tab-clobk">
+                <ul class="tab">
                     <li class="tab-item active" id="top25TableA"><a href="#" onclick="switchDisplay('top25Table')">Top 25</a></li>
                     <li class="tab-item" id="genresPieA"><a href="#" onclick="switchDisplay('genresPie')">Genres</a></li>
                     <li class="tab-item" id="publishersPieA"><a href="#" onclick="switchDisplay('publishersPie')">Publishers</a></li>
                     <li class="tab-item" id="playersPeaksTableA"><a href="#" onclick="switchDisplay('playersPeaksTable')">Players peaks</a></li>
                     <li class="tab-item" id="adultChinaPiesA"><a href="#" onclick="switchDisplay('adultChinaPies')">Adult content / Steam China</a></li>
                     <li class="tab-item" id="reviewScoresTableA"><a href="#" onclick="switchDisplay('reviewScoresTable')">Review scores</a></li>
+                    <li class="tab-item" id="allTableA"><a href="#" onclick="switchDisplay('allTable')">All data</a></li>
                 </ul>
             </div>
 
@@ -29,13 +30,14 @@
             <div id="playersPeaksTable" style="display: none"></div>
             <div id="adultChinaPies" style="display: none"></div>
             <div id="reviewScoresTable" style="display: none"></div>
+            <div id="allTable" style="display: none"></div>
         </div>
 
         <script>
             var windowWidth = window.innerWidth - 10;
 
             function switchDisplay(s) {
-                var tabIds = ['top25Table', 'genresPie', 'publishersPie', 'playersPeaksTable', 'adultChinaPies', 'reviewScoresTable'];
+                var tabIds = ['top25Table', 'genresPie', 'publishersPie', 'playersPeaksTable', 'adultChinaPies', 'reviewScoresTable', 'allTable'];
                 if (tabIds.includes(s)){
                     for (var i=0; i < tabIds.length; i++){
                         if (tabIds[i] == s){
@@ -71,6 +73,7 @@
                     playersPeaksTable(data);
                     adultChinaPies(data);
                     reviewScoresTable(data);
+                    allTable(data);
                     document.getElementById('hourglass').style.display = 'none';
                 })
                 .catch(e => {
@@ -93,6 +96,8 @@
                     data.top_sellers.data.name = data.top_sellers.data.name.map(x => decodeHTMLEntities(x)).map(x => errorsToERR(x));
                     data.top_sellers.data.publisher = data.top_sellers.data.publisher.map(x => decodeHTMLEntities(x)).map(x => errorsToERR(x));
                     data.top_sellers.data.primary_genre = data.top_sellers.data.primary_genre.map(x => errorsToERR(x));
+                    data.top_sellers.data.release_date = data.top_sellers.data.release_date.map(x => errorsToERR(x));
+                    data.top_sellers.data.review_score = data.top_sellers.data.review_score.map(x => errorsToERR(x));
                 return data
             };
 
@@ -105,7 +110,7 @@
             function topSellersTable(data){
                 var top25TableDiv = document.getElementById('top25Table');
                 var toInsert = `
-                <table class="table table-scroll">
+                <table class="table table-scroll table-hover">
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -126,7 +131,7 @@
                         '" target="_blank">' + data.top_sellers.data.name[i] + '</a></td>' +
                         '<td>' + currentPublisher + '</td>' +
                         '<td>' + currentGenre + '</td></tr>';
-                }
+                };
 
                 toInsert += '</tbody></table>';
                 top25TableDiv.insertAdjacentHTML('beforeend', toInsert);
@@ -229,7 +234,7 @@
                 peakIndices.sort((a,b) => data.top_sellers.data['24h_peak'][b] - data.top_sellers.data['24h_peak'][a]);
 
                 var toInsert = `
-                <table class="table table-scroll">
+                <table class="table table-scroll table-hover">
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -311,7 +316,7 @@
                 });
 
                 var toInsert = `
-                <table class="table table-scroll">
+                <table class="table table-scroll table-hover">
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -333,7 +338,53 @@
 
                 toInsert += '</tbody></table>';
                 reviewScoresTableDiv.insertAdjacentHTML('beforeend', toInsert);                
-            }
+            };
+
+            function allTable(data){
+                var allTableDiv = document.getElementById('allTable');
+                var toInsert = `
+                <table class="table table-scroll table-hover">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Publisher</th>
+                            <th>Genre</th>
+                            <th>Release date</th>
+                            <th>24h Players peak</th>
+                            <th>Review score</th>
+                            <th>Adult content</th>
+                            <th>Steam China approved</th>
+                        </tr>
+                    <thead>
+                    <tbody>
+                `;
+
+                var currentPublisher;
+                var currentGenre;
+                var currentAdult;
+                var currentDate;
+                var currentScore;
+                var currentChina;
+
+                for(var i=0; i<data.top_sellers.data.steam_id.length; i++){
+                    data.top_sellers.data.publisher[i] == 'ERR' ? currentPublisher = '-' : currentPublisher = data.top_sellers.data.publisher[i];
+                    data.top_sellers.data.primary_genre[i] == 'ERR' ? currentGenre = '-' : currentGenre = data.top_sellers.data.primary_genre[i];
+                    data.top_sellers.data.has_adult_content[i] == 'ERR' ? currentAdult = '-' : data.top_sellers.data.has_adult_content[i] == '0' ? currentAdult = 'No' : currentAdult = 'Yes';
+                    data.top_sellers.data.release_date[i] == 'ERR' ? currentDate = '-' : currentDate = data.top_sellers.data.release_date[i];
+                    data.top_sellers.data.review_score[i] == 'ERR' ? currentScore = '-' : currentScore = data.top_sellers.data.review_score[i];
+                    data.top_sellers.data.steam_china_approved == 'ERR' ? currentChina = '-' : data.top_sellers.data.steam_china_approved[i] == '0' ? currentChina = 'No' : currentChina = 'Yes';
+
+                    toInsert += '<tr><td>' + (i+1) + '</td><td><a href="https://steamdb.info/app/' + data.top_sellers.data.steam_id[i] +
+                        '" target="_blank">' + data.top_sellers.data.name[i] + '</a></td>' +
+                        '<td>' + currentPublisher + '</td>' +
+                        '<td>' + currentGenre + '</td><td>' + currentDate + '</td><td>' + data.top_sellers.data['24h_peak'][i] + '</td>' +
+                        '<td>' + currentScore + '</td><td>' + currentAdult + '</td><td>' + currentChina + '</td></tr>';
+                }
+
+                toInsert += '</tbody></table>';
+                allTableDiv.insertAdjacentHTML('beforeend', toInsert);
+            };
 
             getTopSellers();
         </script>
