@@ -55,10 +55,10 @@
 
             function getTopSellers(){
                 const reqHeaders = {
-                    "apikey": "9455a76bb03c5a8f8305"
+                    "apikey": "WyrOO89gQi",
+                    "signal": "get_steam_top_sellers"
                 };
-                //const reqUrl = 'http://localhost:5000/steam_top_sellers/';
-                const reqUrl = 'https://nnoi.se/api/steam_top_sellers/';
+                const reqUrl = 'http://141.145.208.108/transmitter';
                 const apiReq = new Request(reqUrl, {headers: reqHeaders});
 
                 fetch(apiReq)
