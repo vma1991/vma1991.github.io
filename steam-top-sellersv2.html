@@ -1,392 +1,59 @@
-<html>
-    <head>
-        <title>vma1991.net</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-        <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
-    </head>
-
-    <body>
-        <div class="container">
-            <div id="topbar">
-                <h4>Steam store global top sellers</h4>
-                Source - <a href="https://steamdb.info/stats/globaltopsellers/" target="_blank">SteamDB</a><br>
-                Last update - <span id="lastUpdate"></span> <span id="hourglass">&#9203;</span>
-                <ul class="tab">
-                    <li class="tab-item active" id="top25TableA"><a href="#" onclick="switchDisplay('top25Table')">Top 25</a></li>
-                    <li class="tab-item" id="genresPieA"><a href="#" onclick="switchDisplay('genresPie')">Genres</a></li>
-                    <li class="tab-item" id="publishersPieA"><a href="#" onclick="switchDisplay('publishersPie')">Publishers</a></li>
-                    <li class="tab-item" id="playersPeaksTableA"><a href="#" onclick="switchDisplay('playersPeaksTable')">Players peaks</a></li>
-                    <li class="tab-item" id="adultChinaPiesA"><a href="#" onclick="switchDisplay('adultChinaPies')">Adult content / Steam China</a></li>
-                    <li class="tab-item" id="reviewScoresTableA"><a href="#" onclick="switchDisplay('reviewScoresTable')">Review scores</a></li>
-                    <li class="tab-item" id="allTableA"><a href="#" onclick="switchDisplay('allTable')">All data</a></li>
-                </ul>
-            </div>
-
-            <div id="top25Table"></div>
-            <div id="genresPie" style="display: none;"></div>
-            <div id="publishersPie" style="display: none"></div>
-            <div id="playersPeaksTable" style="display: none"></div>
-            <div id="adultChinaPies" style="display: none"></div>
-            <div id="reviewScoresTable" style="display: none"></div>
-            <div id="allTable" style="display: none"></div>
-        </div>
-
-        <script>
-            var windowWidth = window.innerWidth - 10;
-
-            function switchDisplay(s) {
-                var tabIds = ['top25Table', 'genresPie', 'publishersPie', 'playersPeaksTable', 'adultChinaPies', 'reviewScoresTable', 'allTable'];
-                if (tabIds.includes(s)){
-                    for (var i=0; i < tabIds.length; i++){
-                        if (tabIds[i] == s){
-                            document.getElementById(tabIds[i]).style.display = 'block';
-                            document.getElementById(tabIds[i]+'A').className = 'tab-item active';
-                        }
-                        else {
-                            document.getElementById(tabIds[i]).style.display = 'none';
-                            document.getElementById(tabIds[i]+'A').className = 'tab-item';
-                        }
-                    }
-                }
-                else return
-            };
-
-            function getTopSellers(){
-                const reqHeaders = {
-                    "apikey": "WyrOO89gQi",
-                    "signal": "get_steam_top_sellers"
-                };
-                const reqUrl = 'http://141.145.208.108/transmitter';
-                const apiReq = new Request(reqUrl, {headers: reqHeaders});
-
-                fetch(apiReq)
-                .then(response => response.json())
-                .then(json => unescapeTopSellers(json))
-                .then(data => {
-                    console.log(data);
-                    lastUpdate(data);
-                    topSellersTable(data);
-                    genresPie(data);
-                    publishersPie(data);
-                    playersPeaksTable(data);
-                    adultChinaPies(data);
-                    reviewScoresTable(data);
-                    allTable(data);
-                    document.getElementById('hourglass').style.display = 'none';
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-            };
-
-            function decodeHTMLEntities(s){
-                var textArea = document.createElement('textarea');
-                textArea.innerHTML = s;
-                return textArea.value
-            };
-
-            function errorsToERR(s){
-                if (s.slice(0,3) == 'ERR') return 'ERR'
-                else return s
-            };
-
-            function unescapeTopSellers(data){
-                    data.top_sellers.data.name = data.top_sellers.data.name.map(x => decodeHTMLEntities(x)).map(x => errorsToERR(x));
-                    data.top_sellers.data.publisher = data.top_sellers.data.publisher.map(x => decodeHTMLEntities(x)).map(x => errorsToERR(x));
-                    data.top_sellers.data.primary_genre = data.top_sellers.data.primary_genre.map(x => errorsToERR(x));
-                    data.top_sellers.data.release_date = data.top_sellers.data.release_date.map(x => errorsToERR(x));
-                    data.top_sellers.data.review_score = data.top_sellers.data.review_score.map(x => errorsToERR(x));
-                return data
-            };
-
-            function lastUpdate(data){
-                var updateDate = new Date(data.top_sellers.date.slice(0,4), data.top_sellers.date.slice(4,6)-1, data.top_sellers.date.slice(6,8));
-                var dateSpan = document.getElementById('lastUpdate');
-                dateSpan.innerHTML = updateDate.toDateString();
-            };
-
-            function topSellersTable(data){
-                var top25TableDiv = document.getElementById('top25Table');
-                var toInsert = `
-                <table class="table table-striped table-scroll">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Publisher</th>
-                            <th>Genre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                `;
-
-                var currentPublisher;
-                var currentGenre;
-                for(var i=0; i<25; i++){
-                    data.top_sellers.data.publisher[i] == 'ERR' ? currentPublisher = '-' : currentPublisher = data.top_sellers.data.publisher[i];
-                    data.top_sellers.data.primary_genre[i] == 'ERR' ? currentGenre = '-' : currentGenre = data.top_sellers.data.primary_genre[i];
-                    toInsert += '<tr><td>' + (i+1) + '</td><td><a href="https://steamdb.info/app/' + data.top_sellers.data.steam_id[i] +
-                        '" target="_blank">' + data.top_sellers.data.name[i] + '</a></td>' +
-                        '<td>' + currentPublisher + '</td>' +
-                        '<td>' + currentGenre + '</td></tr>';
-                };
-
-                toInsert += '</tbody></table>';
-                top25TableDiv.insertAdjacentHTML('beforeend', toInsert);
-            };
-
-            function genresPie(data){
-                var genresPieDiv = document.getElementById('genresPie');
-                
-                var genresFreqs = data.top_sellers.data.primary_genre.reduce((acc, curr) => {
-                    return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
-                }, {});
-                delete genresFreqs.ERR;
-
-                var genresFreqsArray = [];
-                for (genre in genresFreqs) genresFreqsArray.push([genre, genresFreqs[genre]]);
-                genresFreqsArray.sort((a,b) => b[1] - a[1])
-                
-                var otherCount = 0;
-                for (var i=5; i<genresFreqsArray.length; i++) otherCount += genresFreqsArray[i][1];
-                genresFreqsArray = genresFreqsArray.slice(0,5);
-                genresFreqsArray.push(['Other', otherCount]);
-
-                var genresValues = genresFreqsArray.reduce((acc, curr) => {
-                    acc.push(curr[0]);
-                    return acc
-                }, []);
-
-                var freqsValues = genresFreqsArray.reduce((acc, curr) => {
-                    acc.push(curr[1]);
-                    return acc
-                }, []);
-
-                var pieData = [{
-                    values: freqsValues,
-                    labels: genresValues,
-                    type: 'pie'
-                }];
-
-                var pieLayout = {
-                    title: 'Top 5 genres',
-                    width: windowWidth
-                };
-
-                var pieConfig = {
-                    responsive: true
-                }
-
-                Plotly.newPlot(genresPieDiv, pieData, pieLayout, pieConfig);
-            };
-
-            function publishersPie(data) {
-                var publishersPieDiv = document.getElementById('publishersPie');
-
-                var publishersFreqs = data.top_sellers.data.publisher.reduce((acc, curr) => {
-                    return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
-                }, {});
-                delete publishersFreqs.ERR;
-
-                var publishersFreqsArray = [];
-                for (pub in publishersFreqs) publishersFreqsArray.push([pub, publishersFreqs[pub]]);
-                publishersFreqsArray.sort((a, b) => b[1] - a[1])
-                
-                var otherCount = 0;
-                for (var i=10; i<publishersFreqsArray.length; i++) otherCount += publishersFreqsArray[i][1];
-                publishersFreqsArray = publishersFreqsArray.slice(0,10);
-                publishersFreqsArray.push(['Other', otherCount]);
-
-                var publishersValues = publishersFreqsArray.reduce((acc, curr) => {
-                    acc.push(curr[0]);
-                    return acc
-                }, []);
-
-                var freqsValues = publishersFreqsArray.reduce((acc, curr) => {
-                    acc.push(curr[1]);
-                    return acc
-                }, []);
-
-                var pieData = [{
-                    values: freqsValues,
-                    labels: publishersValues,
-                    type: 'pie'
-                }];
-
-                var pieLayout = {
-                    title: 'Top 10 publishers',
-                    width: windowWidth
-                };
-
-                var pieConfig = {
-                    responsive: true
-                }
-
-                Plotly.newPlot(publishersPieDiv, pieData, pieLayout, pieConfig);
-            };
-
-            function playersPeaksTable(data){
-                var playersPeaksTableDiv = document.getElementById('playersPeaksTable');
-
-                var peakIndices = Array.from(data.top_sellers.data['24h_peak'].keys());
-                peakIndices.sort((a,b) => data.top_sellers.data['24h_peak'][b] - data.top_sellers.data['24h_peak'][a]);
-
-                var toInsert = `
-                <table class="table table-striped table-scroll">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>24h Players peak</th>
-                            <th>Seller rank</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                `;
-                
-                for(var i=0; i<25; i++){
-                    toInsert += '<tr><td>' + (i+1) + '</td><td><a href="https://steamdb.info/app/' + 
-                        data.top_sellers.data.steam_id[peakIndices[i]] +
-                        '" target="_blank">' + data.top_sellers.data.name[peakIndices[i]] + '</a></td>' +
-                        '<td>' + data.top_sellers.data['24h_peak'][peakIndices[i]] + '</td>' +
-                        '<td>' + peakIndices[i] + '</td></tr>';
-                }
-
-                toInsert += '</tbody></table>';
-                playersPeaksTableDiv.insertAdjacentHTML('beforeend', toInsert);
-            };
-
-            function adultChinaPies(data){
-                var adultChinaPiesDiv = document.getElementById('adultChinaPies');
-
-                var adultCount = data.top_sellers.data.has_adult_content
-                .reduce((acc, curr) => isNaN(parseInt(curr)) ? acc : acc + parseInt(curr), 0);
-                var chinaCount = data.top_sellers.data.steam_china_approved
-                .reduce((acc, curr) => isNaN(parseInt(curr)) ? acc : acc + parseInt(curr), 0);
-
-                var piesData = [
-                    {
-                        values: [adultCount, 100-adultCount],
-                        labels: ['Yes', 'No'],
-                        type: 'pie',
-                        name: 'Has adult content',
-                        domain: {
-                            row: 0,
-                            column: 0
-                        }
-                    },
-                    {
-                        values: [chinaCount, 100-chinaCount],
-                        labels: ['Yes', 'No'],
-                        type: 'pie',
-                        name: 'Steam China approved',
-                        domain: {
-                            row: 0,
-                            column: 1
-                        }
-                    }
-                ];
-
-                var piesLayout = {
-                    width: windowWidth,
-                    title: 'Adult content (L) - Steam China Approved (R)',
-                    grid: {
-                        rows: 1,
-                        columns: 2
-                    },
-                };
-
-                var piesConfig = {
-                    responsive: true
-                };
-
-                Plotly.newPlot(adultChinaPiesDiv, piesData, piesLayout, piesConfig);
-            };
-
-            function reviewScoresTable(data){
-                var reviewScoresTableDiv = document.getElementById('reviewScoresTable');
-
-                var reviewIndices = Array.from(data.top_sellers.data['review_score'].keys());
-                reviewIndices.sort((a,b) => {
-                    var aScore = isNaN(parseInt(data.top_sellers.data['review_score'][a])) ? 0 : data.top_sellers.data['review_score'][a];
-                    var bScore = isNaN(parseInt(data.top_sellers.data['review_score'][b])) ? 0 : data.top_sellers.data['review_score'][b];
-                    return bScore - aScore
-                });
-
-                var toInsert = `
-                <table class="table table-striped table-scroll">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Review score</th>
-                            <th>Seller rank</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                `;
-                
-                for(var i=0; i<25; i++){
-                    toInsert += '<tr><td>' + (i+1) + '</td><td><a href="https://steamdb.info/app/' + 
-                        data.top_sellers.data.steam_id[reviewIndices[i]] +
-                        '" target="_blank">' + data.top_sellers.data.name[reviewIndices[i]] + '</a></td>' +
-                        '<td>' + data.top_sellers.data['review_score'][reviewIndices[i]] + '</td>' +
-                        '<td>' + reviewIndices[i] + '</td></tr>';
-                }
-
-                toInsert += '</tbody></table>';
-                reviewScoresTableDiv.insertAdjacentHTML('beforeend', toInsert);                
-            };
-
-            function allTable(data){
-                var allTableDiv = document.getElementById('allTable');
-                var toInsert = `
-                <table class="table table-striped table-scroll">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Publisher</th>
-                            <th>Genre</th>
-                            <th>Release date</th>
-                            <th>24h Players peak</th>
-                            <th>Review score</th>
-                            <th>Adult content</th>
-                            <th>Steam China approved</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                `;
-
-                var currentPublisher;
-                var currentGenre;
-                var currentAdult;
-                var currentDate;
-                var currentScore;
-                var currentChina;
-
-                for(var i=0; i<data.top_sellers.data.steam_id.length; i++){
-                    data.top_sellers.data.publisher[i] == 'ERR' ? currentPublisher = '-' : currentPublisher = data.top_sellers.data.publisher[i];
-                    data.top_sellers.data.primary_genre[i] == 'ERR' ? currentGenre = '-' : currentGenre = data.top_sellers.data.primary_genre[i];
-                    data.top_sellers.data.has_adult_content[i] == 'ERR' ? currentAdult = '-' : data.top_sellers.data.has_adult_content[i] == '0' ? currentAdult = 'No' : currentAdult = 'Yes';
-                    data.top_sellers.data.release_date[i] == 'ERR' ? currentDate = '-' : currentDate = data.top_sellers.data.release_date[i];
-                    data.top_sellers.data.review_score[i] == 'ERR' ? currentScore = '-' : currentScore = data.top_sellers.data.review_score[i];
-                    data.top_sellers.data.steam_china_approved == 'ERR' ? currentChina = '-' : data.top_sellers.data.steam_china_approved[i] == '0' ? currentChina = 'No' : currentChina = 'Yes';
-
-                    toInsert += '<tr><td>' + (i+1) + '</td><td><a href="https://steamdb.info/app/' + data.top_sellers.data.steam_id[i] +
-                        '" target="_blank">' + data.top_sellers.data.name[i] + '</a></td>' +
-                        '<td>' + currentPublisher + '</td>' +
-                        '<td>' + currentGenre + '</td><td>' + currentDate + '</td><td>' + data.top_sellers.data['24h_peak'][i] + '</td>' +
-                        '<td>' + currentScore + '</td><td>' + currentAdult + '</td><td>' + currentChina + '</td></tr>';
-                }
-
-                toInsert += '</tbody></table>';
-                allTableDiv.insertAdjacentHTML('beforeend', toInsert);
-            };
-
-            getTopSellers();
-        </script>
-    </body>
-</html>
+<title>vma1991.net</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>div#menu{display:none}div#allData,div#publishers,div#genres,div#playersPeaks,div#reviewScores,div#adultSteamChina{margin-top:2em;display:none}div.tableCell{display:flex;align-items:center;margin:1em 0}div.tableCell2{display:flex;align-items:center;margin:1em 0;background-color:#d3d3d3}h2.tableRank{margin:0 .7em}div.tableData{margin:0;width:100%;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-evenly}span.tableEntry{display:inline-block}</style><div id=top><h1>Steam store global top sellers</h1><p>Source - <a href=https://steamdb.info/stats/globaltopsellers/ target=_blank>SteamDB</a><br>Last update - <span id=lastUpdate></span> <span id=hourglass>&#9203;</span></div><div id=menu><a href=# id=allDataA onclick='switchDisplay("allData")'>All data</a>
+    <a href=# id=publishersA onclick='switchDisplay("publishers")'>Publishers</a>
+    <a href=# id=genresA onclick='switchDisplay("genres")'>Genres</a>
+    <a href=# id=playersPeaksA onclick='switchDisplay("playersPeaks")'>Players peaks</a>
+    <a href=# id=reviewScoresA onclick='switchDisplay("reviewScores")'>Review scores</a>
+    <a href=# id=adultSteamChinaA onclick='switchDisplay("adultSteamChina")'>Adult / Steam China</a></div><div id=allData><h3><mark>All data</mark></h3></div><div id=publishers><h3><mark>Publishers</mark></h3></div><div id=genres><h3><mark>Genres</mark></h3></div><div id=playersPeaks><h3><mark>24h Players peak ranking</mark></h3></div><div id=reviewScores><h3><mark>Review score ranking</mark></h3></div><div id=adultSteamChina><h3><mark>Adult content / Steam China approved</mark></h3></div><script src=topsellers.js></script>
+    <script>function switchDisplay(e){var t,n=["allData","genres","publishers","playersPeaks","reviewScores","adultSteamChina"];if(n.includes(e))for(t=0;t<n.length;t++)n[t]==e?(document.getElementById(n[t]).style.display="block",document.getElementById(n[t]+"A").style.fontWeight="bold"):(document.getElementById(n[t]).style.display="none",document.getElementById(n[t]+"A").style.fontWeight="normal");else return}function decodeHTMLEntities(e){var t=document.createElement("textarea");return t.innerHTML=e,t.value}function errorsToERR(e){return e.slice(0,3)=="ERR"?"ERR":e}function unescapeTopSellers(e){return e.top_sellers.data.name=e.top_sellers.data.name.map(e=>decodeHTMLEntities(e)).map(e=>errorsToERR(e)),e.top_sellers.data.publisher=e.top_sellers.data.publisher.map(e=>decodeHTMLEntities(e)).map(e=>errorsToERR(e)),e.top_sellers.data.primary_genre=e.top_sellers.data.primary_genre.map(e=>errorsToERR(e)),e.top_sellers.data.release_date=e.top_sellers.data.release_date.map(e=>errorsToERR(e)),e.top_sellers.data.review_score=e.top_sellers.data.review_score.map(e=>errorsToERR(e)),e}function lastUpdate(e){var t=new Date(e.top_sellers.date.slice(0,4),e.top_sellers.date.slice(4,6)-1,e.top_sellers.date.slice(6,8));document.getElementById("lastUpdate").innerHTML=t.toDateString()}function allData(e){for(var n,s,o,i,a,r,c,l="",t=0;t<e.top_sellers.data.steam_id.length;t++)t%2==1?o="tableCell":o="tableCell2",e.top_sellers.data.publisher[t]=="ERR"?i="-":i=e.top_sellers.data.publisher[t],e.top_sellers.data.primary_genre[t]=="ERR"?a="-":a=e.top_sellers.data.primary_genre[t],e.top_sellers.data.release_date[t]=="ERR"?r="-":r=e.top_sellers.data.release_date[t],e.top_sellers.data.review_score[t]=="ERR"?c="-":c=e.top_sellers.data.review_score[t],e.top_sellers.data.has_adult_content[t]=="ERR"?n="-":e.top_sellers.data.has_adult_content[t]=="0"?n="&nbsp;":n="&#128696;",e.top_sellers.data.steam_china_approved=="ERR"?s="-":e.top_sellers.data.steam_china_approved[t]=="0"?s="&nbsp;":s="&#x1f1e8;",l+=`<div class="${o}">
+                            <h2 class="tableRank">${t+1}</h2>
+                            <div class="tableData">
+                                <span class="tableEntry"><b><a href="https://steamdb.info/app/${e.top_sellers.data.steam_id[t]}" target="_blank">${e.top_sellers.data.name[t]}</a></b></span>
+                                <span class="tableEntry">${i}</span>
+                                <span class="tableEntry"><i>${a}</i></span>
+                                <span class="tableEntry">Released ${r}</span>
+                                <span class="tableEntry">Players peak ${e.top_sellers.data["24h_peak"][t]}</span>
+                                <span class="tableEntry">Review score ${c}</span>
+                                <span class="tableEntry" title="Adult content">${n}</span>
+                                <span class="tableEntry" title="Steam China approved">${s}</span>
+                            </div>
+                        </div>`;document.getElementById("allData").insertAdjacentHTML("beforeend",l)}function publishers(e){var t,n,o,i,a,s=e.top_sellers.data.publisher.reduce((e,t)=>(e[t]?++e[t]:e[t]=1,e),{});delete s.ERR,n=[];for(pub in s)n.push([pub,s[pub]]);n.sort((e,t)=>t[1]-e[1]),o=n.reduce((e,t)=>(e.push(t[0]),e),[]),a=n.reduce((e,t)=>(e.push(t[1]),e),[]),i="";for(t=0;t<o.length;t++)t%2==1?currentClass="tableCell":currentClass="tableCell2",i+=`<div class="${currentClass}">
+                            <h2 class="tableRank">${t+1}</h2>
+                            <div class="tableData">
+                                <span class="tableEntry">${o[t]}</span>
+                                <span class="tableEntry"><b>${a[t]} %</b> (games)</span>
+                            </div>
+                        </div>`;document.getElementById("publishers").insertAdjacentHTML("beforeend",i)}function genres(e){var t,n,o,i,a,s=e.top_sellers.data.primary_genre.reduce((e,t)=>(e[t]?++e[t]:e[t]=1,e),{});delete s.ERR,n=[];for(genre in s)n.push([genre,s[genre]]);n.sort((e,t)=>t[1]-e[1]),o=n.reduce((e,t)=>(e.push(t[0]),e),[]),a=n.reduce((e,t)=>(e.push(t[1]),e),[]),i="";for(t=0;t<o.length;t++)t%2==1?currentClass="tableCell":currentClass="tableCell2",i+=`<div class="${currentClass}">
+                            <h2 class="tableRank">${t+1}</h2>
+                            <div class="tableData">
+                                <span class="tableEntry">${o[t]}</span>
+                                <span class="tableEntry"><b>${a[t]} %</b> (games)</span>
+                            </div>
+                        </div>`;document.getElementById("genres").insertAdjacentHTML("beforeend",i)}function playersPeaks(e){var t,s,n=Array.from(e.top_sellers.data["24h_peak"].keys());n.sort((t,n)=>e.top_sellers.data["24h_peak"][n]-e.top_sellers.data["24h_peak"][t]),s="";for(t=0;t<e.top_sellers.data.steam_id.length;t++)t%2==1?currentClass="tableCell":currentClass="tableCell2",s+=`<div class="${currentClass}">
+                            <h2 class="tableRank">${t+1}</h2>
+                            <div class="tableData">
+                                <span class="tableEntry"><b><a href="https://steamdb.info/app/${e.top_sellers.data.steam_id[n[t]]}" target="_blank">${e.top_sellers.data.name[n[t]]}</a></b></span>
+                                <span class="tableEntry">${e.top_sellers.data["24h_peak"][n[t]]} players</span>
+                                <span class="tableEntry"><i>Seller #${n[t]+1}</i></span>
+                            </div>
+                        </div>`;document.getElementById("playersPeaks").insertAdjacentHTML("beforeend",s)}function reviewScores(e){var t,s,n=Array.from(e.top_sellers.data.review_score.keys());n.sort((t,n)=>{var s=isNaN(parseInt(e.top_sellers.data.review_score[t]))?0:e.top_sellers.data.review_score[t],o=isNaN(parseInt(e.top_sellers.data.review_score[n]))?0:e.top_sellers.data.review_score[n];return o-s}),s="";for(t=0;t<e.top_sellers.data.steam_id.length;t++)t%2==1?currentClass="tableCell":currentClass="tableCell2",s+=`<div class="${currentClass}">
+                            <h2 class="tableRank">${t+1}</h2>
+                            <div class="tableData">
+                                <span class="tableEntry"><b><a href="https://steamdb.info/app/${e.top_sellers.data.steam_id[n[t]]}" target="_blank">${e.top_sellers.data.name[n[t]]}</a></b></span>
+                                <span class="tableEntry">Score ${e.top_sellers.data.review_score[n[t]]}</span>
+                                <span class="tableEntry"><i>Seller #${n[t]+1}</i></span>
+                            </div>
+                        </div>`;document.getElementById("reviewScores").insertAdjacentHTML("beforeend",s)}function adultSteamChina(e){var t=e.top_sellers.data.has_adult_content.reduce((e,t)=>isNaN(parseInt(t))?e:e+parseInt(t),0),n=e.top_sellers.data.steam_china_approved.reduce((e,t)=>isNaN(parseInt(t))?e:e+parseInt(t),0);toInsert=`<div class="tableCell">
+                        <h2 class="tableRank">&#128696;</h2>
+                        <div class="tableData">
+                            <span class="tableEntry">Games with adult content</span>
+                            <span class="tableEntry"><b>${t}% (games)</b></span>
+                        </div>
+                    </div>
+    
+                    <div class="tableCell2">
+                        <h2 class="tableRank">&#x1f1e8;</h2>
+                        <div class="tableData">
+                            <span class="tableEntry">Steam China approved games</span>
+                            <span class="tableEntry"><b>${n}% (games)</b></span>
+                        </div>
+                    </div>`,document.getElementById("adultSteamChina").insertAdjacentHTML("beforeend",toInsert)}function getTopSellers(){const e={apikey:"WyrOO89gQi",signal:"get_steam_top_sellers"},t="http://141.145.208.108/transmitter",n=new Request(t,{headers:e});fetch(n).then(e=>e.json()).then(e=>unescapeTopSellers(e)).then(e=>{allData(e),publishers(e),genres(e),playersPeaks(e),reviewScores(e),adultSteamChina(e),lastUpdate(e),switchDisplay("allData"),document.getElementById("hourglass").style.display="none",document.getElementById("menu").style.display="block"}).catch(e=>{console.log(e)})}getTopSellers()</script>
